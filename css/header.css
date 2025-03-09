@@ -1,0 +1,237 @@
+.wrapper-header {
+  background-color: var(--header-normal);
+  width: 100vw;
+  height: 7.5vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 2;
+}
+
+.text-logo {
+  color: var(--white-normal);
+  height: 100%;
+  margin-left: 3vw;
+
+  font-size: 32px;
+  line-height: 7.5vh;
+  letter-spacing: 2.5px;
+
+  font-family: var(--font-decorative);
+  text-align: left;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration: none;
+  cursor: pointer;
+}
+.text-logo a {
+  color: var(--white-normal);   
+  text-decoration: none;
+}
+
+
+.header-control-panel {
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.notification-panel {
+  width: 29.5px;
+  height: 100%;
+
+  align-items: center;
+  display: flex;
+  justify-content: left;
+  position: relative;
+  cursor: pointer;
+}
+
+#wrapper-message-menu {
+  background-color: var(--header-normal);
+  width: 22vw;
+  height: 33vh;
+  left: -1.5vw;
+  top: 100%;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+  padding: 1.5vh;
+
+  display: none;
+  flex-direction: column;
+  justify-content: left;
+  position: absolute;
+}
+
+.message-menu-item {
+  width: 100%;
+  height: 10vh;
+
+  align-content: space-between;
+  display: flex;
+  justify-content: left;
+}
+.message-menu-item:hover {
+    background-color:var(--header-accent);
+}
+.message-menu-item:last-child:hover {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.message-avatar-panel {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.message-panel {
+  width: 100%;
+  height: 100%;
+  padding-top: 1vh;
+
+  align-items: top;
+  display: block;
+  overflow: hidden;
+  white-space: normal;
+  word-wrap: break-word;
+  text-overflow: ellipsis; 
+  position: relative;
+}
+.message-panel::after {
+  background: linear-gradient(to bottom, var(--transperent) 0%,  var(--header-normal) 100%);
+  width: 100%;
+  height: 40%;
+  left: 0;
+  bottom: 0;
+
+  content: ""; 
+  pointer-events: none;
+  position: absolute;
+}
+.message-menu-item:hover .message-panel::after {
+  background: linear-gradient(to bottom, var(--transperent) 0%,  var(--header-accent) 100%);
+}
+
+.message-username {
+  color: var(--white-accent);
+
+  font-size: 14px;
+  letter-spacing: 2.5px;
+
+  font-family: var(--font-decorative);
+  text-align: left;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  overflow: hidden; 
+  white-space: none;
+  text-overflow: ellipsis; 
+}
+
+.message-text {
+  color: var(--white-normal);
+  font-size: 12px;
+
+  font-family: var(--font-decorative);
+  text-align: left;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  white-space: normal;
+  word-wrap: break-word;
+  text-overflow: ellipsis; 
+  overflow: hidden;
+}
+
+
+#profile-panel {
+  margin-left: 3vw;
+  margin-right: 4.5vw;
+
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-username {
+  color: var(--white-normal);
+  height: 100%;
+  margin-left: 0.5vw;
+
+  font-size: 20px;
+  line-height: 7.7vh;
+  letter-spacing: 1px;
+  
+  font-family: var(--font-decorative);
+  text-align: center;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration: none;
+}
+
+#wrapper-profile-menu {
+  background-color: var(--header-normal);
+  width: calc(100% + 3vw);;
+  height: 18vh;
+  top: 100%;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+  padding: 1.5vh;
+
+  align-content: center;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+}
+
+.profile-menu-item {
+  color: var(--white-normal);
+  height: 50%;
+  font-size: 20px;
+  line-height: 7.5vh;
+  letter-spacing: 1px;
+
+  font-family: var(--font-decorative);
+  text-align: center;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+}
+.profile-menu-item a {
+  color: var(--white-normal);
+
+  display: block;
+  text-decoration: none;
+}
+.profile-menu-item a:hover {
+  background-color:var(--header-accent);
+}
+.profile-menu-item:last-child a:hover {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+#icon-profile-avatar {
+  width: 40px;
+  height: 40px;
+}
+.icon-message-avatar {
+  width: 64px;
+  height: 64px;
+}
+
+#icon-notification {
+  transform-origin: 50% -15px;
+  width: 38.5px;
+  height: 38px;
+} 
+

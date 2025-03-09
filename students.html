@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+
+  <body>
+    <div id="header-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+    
+    <div class="wrapper-main"> 
+      <main>
+        <div class="table-panel">
+          <h2 class="text-table-title">Students</h2>
+          <div class="table-control-panel">
+            <img src="./img/add.png" alt="add student" id="icon-add-row"/>
+            <img src="./img/delete.png" alt="delete students" id="icon-delete-table"/>
+          </div>
+        </div>
+        <div class="wrapper-table">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="checkbox-table-head"/></th>
+                <th>Group</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Birthday</th>
+                <th>Online</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-panel">
+          <div class="pagination-panel-item rev"><p><</p></div>
+          <div class="pagination-num-panel">
+            <div class="pagination-panel-item act"><p>1</p></div>
+            <div class="pagination-panel-item dir"><p>2</p></div>
+            <div class="pagination-panel-item dir"><p>3</p></div>
+          </div>
+          <div class="pagination-panel-item rev"><p>></p></div>
+        </div>
+
+        <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-redact">
+          <div class="wrapped-window-panel" id="wrapped-window-panel-redact">
+
+              <div class="window-panel" id="window-panel-redact">
+                <h3 class="text-window-title" id="add_student">Add student</h3>
+                <h3 class="text-window-title" id="edit_student">Edit student</h3>
+                <img src="./img/close_dir.png" alt="close window" class="icon-close-window" id="icon-close-window-redact"/>
+              </div>
+              <hr class="line-horizontal">
+              <div class="window-body">
+              <form id="form-student">
+                <fieldset id="fieldset-student">
+                  <div class="form-item">
+                    <label for="select-group">Group</label>
+                    <select name="group" id="select-group">
+                      <option value="selected" >Select group</option>
+                      <option value="PZ-21">PZ-21</option>
+                      <option value="PZ-22">PZ-22</option>
+                      <option value="PZ-23">PZ-23</option>
+                      <option value="PZ-24">PZ-24</option>
+                      <option value="PZ-25">PZ-25</option>
+                      <option value="PZ-26">PZ-26</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label for="first-name">First name</label>
+                    <input type="text" id="first-name" name="first-name" autocomplete="off">
+                  </div>
+                  <div class="form-item">
+                    <label for="last-name">Last name</label>
+                    <input type="text" id="last-name" name="last-name" autocomplete="off">
+                  </div>
+                  <div class="form-item">
+                    <label for="select-gender">Group</label>
+                    <select name="group" id="select-gender">
+                      <option value="selected" >Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label for="birthday-date">Birthday</label>
+                    <input type="date" id="birthday-date" lang="en-GB"/>
+                  </div>
+                </fieldset>
+              </form>
+              </div>
+              <hr class="line-horizontal">
+              <div class="window-control-panel">
+                <pre class="text-confirm" id="text-confirm">
+                All changes will be discarded
+                Are you sure you want to exit?</pre>
+                <button class="window-button" id="button-cancel">Cancel</button>
+                <button class="window-button-rev" id="button-create" type="submit">Create</button>
+                <button class="window-button-rev" id="button-save" type="submit">Save</button>
+                <button class="window-button" id="button-confirm">Confirm</button>
+              </div>
+          </div>
+        </div>
+      
+
+        <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-confirm">
+          <div class="wrapped-window-panel" id="wrapped-window-panel-confirm">
+
+              <div class="window-panel" id="window-panel-confirm">
+                <h3 class="text-window-title">Confirm</h3>
+                <img src="./img/close_dir.png" alt="close window" class="icon-close-window" id="icon-close-window-confirm"/>
+              </div>
+              <hr class="line-horizontal">
+              <div class="window-body">
+                <p class="text-confirm-window" id="text-confirm-window">Sure?</p>
+              </div>
+              <hr class="line-horizontal">
+              <div class="window-control-panel">
+                <button class="window-button" id="button-cancel-confirm">Cancel</button>
+                <button class="window-button-rev" id="button-confirm-confirm" type="submit">Confirm</button>
+              </div>
+          </div>
+        </div>
+    </main>
+    </div>
+  </body>
+
+  <script src="./js/components.js"></script>
+</html>
