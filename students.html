@@ -12,7 +12,7 @@
     <div id="header-placeholder"></div>
     <div id="sidebar-placeholder"></div>
     
-    <div class="wrapper-main"> 
+    <div class="wrapper-main" id="wrapper-main"> 
       <main>
         <div class="table-panel">
           <h2 class="text-table-title">Students</h2>
@@ -25,7 +25,7 @@
           <table>
             <thead>
               <tr>
-                <th><input type="checkbox" id="checkbox-table-head"/></th>
+                <th><input type="checkbox" id="checkbox-table-head" checked="true"/></th>
                 <th>Group</th>
                 <th>Name</th>
                 <th>Gender</th>
@@ -40,13 +40,13 @@
           </table>
         </div>
         <div class="pagination-panel">
-          <div class="pagination-panel-item rev"><p><</p></div>
+          <div class="pagination-panel-item rev"><p>0</p></div>
           <div class="pagination-num-panel">
-            <div class="pagination-panel-item act"><p>1</p></div>
-            <div class="pagination-panel-item dir"><p>2</p></div>
             <div class="pagination-panel-item dir"><p>3</p></div>
+            <div class="pagination-panel-item act"><p>4</p></div>
+            <div class="pagination-panel-item dir"><p>5</p></div>
           </div>
-          <div class="pagination-panel-item rev"><p>></p></div>
+          <div class="pagination-panel-item rev"><p>9</p></div>
         </div>
 
         <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-redact">
@@ -133,4 +133,5 @@
   </body>
 
   <script src="./js/components.js"></script>
+  <!-- <script src="./js/table.js"></script> -->
 </html>
