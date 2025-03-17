@@ -26,8 +26,6 @@ class Student {
 const students = [];
 let student = null;
 
-
-
 // notifIcon.addEventListener("click", () => {
 //     window.location.href = "message.html";
 // });

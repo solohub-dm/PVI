@@ -12,12 +12,21 @@ const textConfirmWindow           = getElement("#text-confirm-window");
 const closeWindowIconCnf          = getElement("#icon-close-window-confirm");
 
 const windowShadowPanelRedact   = getElement("#wrapped-shadow-panel-redact");
-const confirmTableText   = getElement("#text-confirm");
-const confirmTableButton   = getElement("#button-confirm");
+const confirmTableText    = getElement("#text-confirm");
+const confirmTableButton  = getElement("#button-confirm");
 const cancelTableButton   = getElement("#button-cancel");
 const saveTableButton     = getElement("#button-save");
 const createTableButton   = getElement("#button-create");
 const closeWindowIconRdc  = getElement("#icon-close-window-redact");
+
+const windowShadowPanelInfo = getElement("#wrapped-shadow-panel-info");
+const closeWindowIconInfo   = getElement("#icon-close-window-info");
+const group_name_span  = getElement("#group-span");
+const first_name_span  = getElement("#first-name-span");
+const last_name_span   = getElement("#last-name-span");
+const gender_span      = getElement("#gender-span");
+const birth_date_span  = getElement("#birthday-date-span");
+
 
 const deleteTableIcon = getElement("#icon-delete-table");
 const addTableIcon    = getElement("#icon-add-row");
@@ -37,14 +46,69 @@ let isCnfMode = false;
 
 const observer = new MutationObserver(() => {
   bodyCbxItems = document.querySelectorAll(".table-body-checkbox");
+  const anyChecked = Array.from(bodyCbxItems).some(checkbox => checkbox.checked);
+  headCbxItem.checked = anyChecked;
+  if (!anyChecked)
+    offDelete();
 });
 observer.observe(document.body, { childList: true, subtree: true });
 
 let bodyCbxItems;
 
+closeWindowIconInfo.addEventListener('click', closeInfo);
+function closeInfo() {
+  windowShadowPanelInfo.style.display = "none";
+}
+function openInfo(event) {
+  console.log("openInfo");
+  if (window.innerWidth > 850) return;
+  console.log("after >");
+
+  const clckElem = event.target;
+  let td = clckElem.closest("td");
+  if (!td) return;
+
+  console.log("td");
+  console.log(td);
+
+
+  let colIndex = td.cellIndex;
+  if (colIndex === 0 || colIndex === 6) return;
+
+  console.log("colIndex");
+  console.log(colIndex);
+
+  console.log("clckElem");
+  console.log(clckElem);
+
+  const row = clckElem.closest("tr");
+  const studentId = row.dataset.studentId;
+  console.log("colIndex");
+
+  const studentIndex = students.findIndex((student) => student.id == studentId);
+  const student = students[studentIndex];
+  if (!student) return;
+
+  console.log("student");
+  console.log(student);
+
+  group_name_span.textContent = student.group_name;
+  first_name_span.textContent = student.full_name.split(" ")[0]; 
+  last_name_span.textContent = student.full_name.split(" ")[1]; 
+  gender_span.textContent = student.gender;
+  birth_date_span.textContent = student.birth_date;
+
+  windowShadowPanelInfo.style.display = "flex";
+}
+
 headCbxItem.addEventListener('change', headCbxChange);
 function headCbxChange() {
   if (bodyCbxItems) {
+    if (headCbxItem.checked)
+      onDelete();
+    else 
+      offDelete();
+
     bodyCbxItems.forEach((checkbox) => {
       if (checkbox.checked !== headCbxItem.checked) {
         checkbox.checked = headCbxItem.checked;
@@ -59,9 +123,12 @@ function bodyCbxChange(event) {
   lockOptions(checkbox);
   if (checkbox.checked) {
     headCbxItem.checked = true;
+    onDelete();
   } else {
     const anyChecked = Array.from(bodyCbxItems).some(checkbox => checkbox.checked);
     headCbxItem.checked = anyChecked;
+    if (!anyChecked)
+      offDelete();
   }
 } 
 
@@ -85,6 +152,22 @@ function lockOptions(checkbox) {
   }
 }
 
+cancelConfirmWindowButton.addEventListener("click", closeConfirmWindow);
+closeWindowIconCnf.addEventListener("click", closeConfirmWindow);
+
+function closeConfirmWindow() {
+  windowShadowPanelConfirm.style.display = "none";
+}
+
+function offDelete() {
+  deleteTableIcon.style.opacity = 0.3;
+  deleteTableIcon.style.pointerEvents = "none";
+}
+
+function onDelete() {
+  deleteTableIcon.style.opacity = 1;
+  deleteTableIcon.style.pointerEvents = "auto";
+}
 
 function openConfirmWindowOne(event) {
   const clckElem = event.target;
@@ -101,11 +184,24 @@ function openConfirmWindowOne(event) {
 
 function deleteIconClick(row) {
   row.remove();
+
+  let cbx = row.cells[0].firstElementChild;
+
+  // const cbxIndex = bodyCbxItems.findIndex((checkbox) => checkbox == cbx);
+  // if (cbxIndex !== -1) {
+  //   bodyCbxItems.splice(cbxIndex, 1);
+  // }
   const studentId = row.dataset.studentId;
   const studentIndex = students.findIndex((student) => student.id == studentId);
   if (studentIndex !== -1) {
     students.splice(studentIndex, 1);
   }
+
+  const anyChecked = Array.from(bodyCbxItems).some(checkbox => checkbox.checked);
+  headCbxItem.checked = anyChecked;
+  if (!anyChecked)
+    offDelete();
+
   closeConfirmWindow();
 }
 
@@ -120,9 +216,15 @@ function deleteUnlockRow() {
     const rows = tableBody.querySelectorAll("tr");
 
     rows.forEach(row => {
-      if ( row.cells[0].firstElementChild.checked) { 
+      let cbx = row.cells[0].firstElementChild;
+      if (cbx.checked) { 
         row.remove(); 
-  
+        
+        // const cbxIndex = bodyCbxItems.findIndex((checkbox) => checkbox == cbx);
+        // if (cbxIndex !== -1) {
+        //   bodyCbxItems.splice(cbxIndex, 1);
+        // }
+        
         const studentId = row.dataset.studentId;
         const studentIndex = students.findIndex((student) => student.id == studentId);
         if (studentIndex !== -1) {
@@ -179,7 +281,6 @@ function confirmAction() {
 
 confirmTableButton.addEventListener("click", confirmedCancel);
 function confirmedCancel() {
-  
   closeWindow();
 }
 
@@ -285,9 +386,10 @@ function addRow(new_student) {
   let checkbox = createElem("input");
 
   new_row.dataset.studentId = new_student.id;
+  new_row.onclick = openInfo;
 
   checkbox.type = "checkbox";
-  checkbox.checked = true;
+  checkbox.checked = headCbxItem.checked;
   checkbox.className = "table-body-checkbox"
   checkbox.onchange = bodyCbxChange;
   // checkbox.addEventListener('change', bodyCbxChange); 
@@ -322,6 +424,11 @@ function addRow(new_student) {
   ].forEach((text, i) => (new_row.children[i + 1].textContent = text));
   new_row.children[5].append(img_stat);
   new_row.children[6].append(container);
+
+  if (!headCbxItem.checked) 
+    lockOptions(checkbox);
+  else 
+    onDelete();
 
   tableBody.append(new_row);
 }
