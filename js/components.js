@@ -26,7 +26,6 @@ function loadScript(scriptSrc) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-
     await includeHTML("./components/header.html", "header-placeholder");
     await includeHTML("./components/sidebar.html", "sidebar-placeholder");
 
@@ -44,18 +43,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (currentPath === "students.html") {
       await loadScript("./js/table.js");
     }
-    
-      const isOpen = localStorage.getItem("menuOpen") === "true";
-      console.log("isOpen: " + isOpen);
-      if (isOpen) {
-        sidebarWrapper.classList.add("no-transition");
-        openSidebar();
-        setTimeout(() => {
-          sidebarWrapper.classList.remove("no-transition");
-        }, 50);
-      }
 
-
+    const isOpen = localStorage.getItem("menuOpen") === "true";
+    console.log("isOpen: " + isOpen);
+    if (isOpen) {
+      sidebarWrapper.classList.add("no-transition");
+      openSidebar();
+      setTimeout(() => {
+        sidebarWrapper.classList.remove("no-transition");
+      }, 50);
+    }
   } catch (error) {
     console.error("Error during initialization:", error);
   }

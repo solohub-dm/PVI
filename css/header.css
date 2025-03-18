@@ -75,7 +75,7 @@
 
   align-content: space-between;
   display: flex;
-  justify-content: left;
+  /* justify-content: flex-start; */
 }
 .message-menu-item:hover {
     background-color:var(--header-accent);
@@ -96,7 +96,6 @@
   height: 100%;
   padding-top: 1vh;
 
-  align-items: top;
   display: block;
   overflow: hidden;
   white-space: normal;
@@ -131,7 +130,6 @@
   font-style: normal;
   text-decoration: none;
   overflow: hidden; 
-  white-space: none;
   text-overflow: ellipsis; 
 }
 
