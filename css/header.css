@@ -229,10 +229,41 @@
 }
 
 #icon-notification {
-  transform-origin: 50% -15px;
+  transform-origin: 50% -10px;
   width: 38.5px;
   height: 38px;
+  transition: transform 0.5s;
+  cursor: pointer;
 } 
+
+#icon-notification.active {
+  animation: shake-click 1s ease-in-out 1;
+}
+
+/* #icon-notification.active:hover {
+  animation: shake-hover 1s ease-in-out 1;
+} */
+
+@keyframes shake-click {
+  0%   { transform: rotate( 0deg)    translateX(0px); }
+  15%  { transform: rotate( 17deg)   translateX(6px); }
+  30%  { transform: rotate(-17deg)  translateX(-6px); }
+  40%  { transform: rotate( 11deg)   translateX(3px); }
+  50%  { transform: rotate(-11deg)  translateX(-3px); }
+  65%  { transform: rotate( 7deg)   translateX(2px); }
+  80%  { transform: rotate(-7deg)  translateX(-2px); }
+  100% { transform: rotate( 0deg)    translateX(0px); }
+}
+
+/* @keyframes shake-hover {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(7deg); }
+  40%  { transform: rotate(-7deg); }
+  60%  { transform: rotate(2deg); }
+  80%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+} */
+
 @media screen and (max-width: 426px) {
   .profile-username {
     display: none;

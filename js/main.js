@@ -31,24 +31,27 @@ let student = null;
 notifIcon.addEventListener("click", () => {
   isNotifOn = true;
 
-  notifIcon.animate(
-    [
-      { transform: "rotate(  0deg)    translateX( 0px)" },
-      { transform: "rotate( 25deg)    translateX( 6px)" },
-      { transform: "rotate(-25deg)    translateX(-6px)" },
-      { transform: "rotate( 20deg)    translateX( 3px)" },
-      { transform: "rotate(-20deg)    translateX(-3px)", offset: 0.5 },
-      { transform: "rotate( 10deg)    translateX( 2px)" },
-      { transform: "rotate(-10deg)    translateX(-2px)" },
-      { transform: "rotate(  0deg)    translateX( 0px)" },
-    ],
-    {
-      duration: 1000,
-      iterations: 1,
-    }
-  );
+
+  // notifIcon.animate(
+  //   [
+  //     { transform: "rotate( 0deg)    translateX( 0px)" },
+  //     { transform: "rotate( 17deg)    translateX( 6px)" },
+  //     { transform: "rotate(-17deg)    translateX(-6px)" },
+  //     { transform: "rotate( 12deg)    translateX( 3px)" },
+  //     { transform: "rotate(-12deg)    translateX(-3px)"  , offset: 0.5 },
+  //     { transform: "rotate( 7deg)     translateX( 2px)" },
+  //     { transform: "rotate(-7deg)     translateX(-2px)" },
+  //     { transform: "rotate( 0deg)    translateX( 0px)" },
+  //   ],
+  //   {
+  //     duration: 1000,
+  //     iterations: 1,
+  //   }
+  // );
 
   setTimeout(() => {
+    notifPanel.classList.toggle('active');
+
     notifIcon.src = "./img/notification_on_rev2.png";
   }, 250);
 });
@@ -56,23 +59,27 @@ notifIcon.addEventListener("click", () => {
 notifPanel.addEventListener("mouseenter", () => {
   if (isNotifOn) {
     isNotifOn = false;
+    console.log("isNotifOn: " + isNotifOn); 
+    // notifIcon.animate(
+    //   [
+    //     { transform: "rotate( 0deg) translateX( 0px)"},
+    //     { transform: "rotate( 7deg) translateX( 2px)"},
+    //     { transform: "rotate(-7deg) translateX(-2px)"},
+    //     { transform: "rotate( 3deg) translateX( 1px)"},
+    //     { transform: "rotate(-3deg) translateX(-1px)"},
+    //     { transform: "rotate( 0deg) translateX( 0x)"},
+    //   ],
+    //   {
+    //     duration: 500,
+    //     iterations: 1,
+    //   }
+    // );
 
-    notifIcon.animate(
-      [
-        { transform: "rotate( 0deg)" },
-        { transform: "rotate( 7deg)" },
-        { transform: "rotate(-7deg)" },
-        { transform: "rotate( 2deg)" },
-        { transform: "rotate(-2deg)" },
-        { transform: "rotate( 0deg)" },
-      ],
-      {
-        duration: 500,
-        iterations: 1,
-      }
-    );
 
     setTimeout(() => {
+      if (notifPanel.classList.contains('active')) {
+        notifPanel.classList.remove('active');
+      }
       notifIcon.src = "./img/notification_off_rev2.png";
     }, 250);
   }

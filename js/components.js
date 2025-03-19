@@ -53,6 +53,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         sidebarWrapper.classList.remove("no-transition");
       }, 50);
     }
+
+    const notificationIcon = document.getElementById('icon-notification');
+
+    notificationIcon.addEventListener('click', () => {
+      notificationIcon.classList.toggle('active');
+    });
+  
+    notificationIcon.addEventListener('mouseover', () => {
+      if (notificationIcon.classList.contains('active')) {
+        notificationIcon.classList.remove('active');
+      }
+    });
+
   } catch (error) {
     console.error("Error during initialization:", error);
   }

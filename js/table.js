@@ -392,10 +392,22 @@ function addRow(new_student) {
   checkbox.type = "checkbox";
   checkbox.checked = headCbxItem.checked;
   checkbox.className = "table-body-checkbox";
+  checkbox.name = "lock";
+  const cbxId = "checkbox-" + new_student.id;
+  checkbox.id = cbxId;
   checkbox.onchange = bodyCbxChange;
+
+  let label = createElem("label");
+  label.className = "label-hidden";
+  label.htmlFor = cbxId;
+  label.textContent = "Lock / unlock row";
+  
+
   // checkbox.addEventListener('change', bodyCbxChange);
 
   img_stat.className = "icon-status";
+  img_stat.alt = "status";
+
   if (new_student.status == "active") img_stat.src = "./img/status_on.png";
   else img_stat.src = "./img/menu_opt.png";
 
@@ -406,6 +418,8 @@ function addRow(new_student) {
   );
   img_edit.src = "./img/edit.png";
   img_del.src = "./img/delete.png";
+  img_edit.alt = "edit row";
+  img_del.alt = "delete row";
   img_edit.id = "icon-edit-row";
   img_del.id = "icon-delete-row";
 
@@ -418,6 +432,7 @@ function addRow(new_student) {
   for (let i = 0; i < 7; i++) new_row.append(createElem("td"));
 
   new_row.children[0].append(checkbox);
+  new_row.children[0].append(label);
   [
     new_student.group_name,
     new_student.full_name,

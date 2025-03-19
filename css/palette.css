@@ -2,7 +2,8 @@
 	--transperent: rgba(0, 0, 0, 0);
 	--shadow:  #20222bcb;
 
-	--white-normal: aliceblue;
+	/* --white-normal: aliceblue; */
+	--white-normal: rgb(248, 252, 255);
 	--white-accent: white;
 /* 
 	--darkblue: #273b4a;
