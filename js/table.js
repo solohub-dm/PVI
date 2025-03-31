@@ -30,6 +30,7 @@ const deleteTableIcon = getElement("#icon-delete-table");
 const addTableIcon = getElement("#icon-add-row");
 const editTableIcon = getElement("#icon-edit-row");
 
+const errorText = getElement("#error-text");
 const form_input = getElement("#form-student");
 const group_name_input = getElement("#select-group");
 const first_name_input = getElement("#first-name");
@@ -300,6 +301,8 @@ function displayButtons() {
 
 function openWindow(isOpenInAddMode) {
   isAddMode = isOpenInAddMode;
+  if (isOpenInAddMode)
+    birth_date_input.value = "2000-01-01";
   displayWindow(true);
 }
 function closeWindow() {
@@ -313,6 +316,16 @@ function closeWindow() {
 
 function displayWindow(isDisplayed) {
   let display = isDisplayed ? "block" : "none";
+  errorText.textContent = "";
+  [
+    group_name_input,
+    first_name_input,
+    last_name_input,
+    gender_input,
+    birth_date_input
+  ].forEach((input) => {
+    input.style.backgroundColor = "#ffffff";
+  }) ;
 
   if (isAddMode) {
     addTableText.style.display = display;
@@ -324,19 +337,168 @@ function displayWindow(isDisplayed) {
   windowShadowPanelRedact.style.display = display;
 }
 
-function checkFormValid() {
-  let isValid = true;
+first_name_input.addEventListener("input", checkCorrectValue);
+last_name_input.addEventListener("input", checkCorrectValue);
+birth_date_input.addEventListener("input", checkCorrectValue);
+group_name_input.addEventListener("focus", checkCorrectValue);
+gender_input.addEventListener("focus", checkCorrectValue);
 
-  if (
-    group_name_input.value == "selected" ||
-    first_name_input.value == "" ||
-    last_name_input.value == "" ||
-    gender_input.value == "selected" ||
-    birth_date_input.value == ""
-  ) {
-    isValid = false;
-    alert("Error data!");
-  }
+function checkFormValid() {
+  if (!checkCorrectValue() || !checkFormEmpty()) return false;
+  return true;
+}
+
+function checkCorrectValue() {
+  console.log("checkCorrectValue");
+  let isValid = false;
+  let colorError = "#e77b7b";
+ 
+  errorText.textContent = "";
+  [
+    group_name_input,
+    first_name_input,
+    last_name_input,
+    gender_input,
+    birth_date_input
+  ].forEach((input) => {
+    input.style.backgroundColor = "#ffffff";
+  }) ;
+
+  do {
+    let firstName = first_name_input.value;
+    if (firstName.trim() !== "" && !isValidName(firstName)) {
+      first_name_input.style.backgroundColor = colorError;
+      break;
+    }
+
+    let lastName = last_name_input.value;
+    if (lastName.trim() !== "" && !isValidName(lastName)) {
+      last_name_input.style.backgroundColor = colorError;
+      break;
+    }
+
+    let date = birth_date_input.value;
+    if (date.trim() !== "" && !isValidDate(date)) {
+      birth_date_input.style.backgroundColor = colorError;
+      break;
+    }
+
+    isValid = true;
+  } while (0);
+
+  return isValid;
+}
+
+function isValidDate(date) {
+  let isValid = false;
+
+  do {
+    let patternDate = /^\d{4}-\d{2}-\d{2}$/;
+    if (!patternDate.test(date)) {
+      errorText.textContent = "Incorrect date format. Please use YYYY-MM-DD.";
+      break;
+    }
+
+    let [year, month, day] = date.split("-").map(Number);
+    let currentYear = new Date().getFullYear();
+
+    if (year < currentYear - 80 || year > currentYear - 16) {
+      errorText.textContent = `Year must be between ${currentYear - 80} and ${currentYear - 16}.`;
+      break;
+    }
+
+    if (month < 1 || month > 12) {
+      errorText.textContent = "Month must be between 01 and 12.";
+      break;
+    }
+
+    let daysInMonth = new Date(year, month, 0).getDate();
+    if (day > daysInMonth) {
+      errorText.textContent = `Day must be between 01 and ${daysInMonth} for the selected month.`;
+      break;
+    }
+
+    isValid = true;
+  } while (0);
+
+  return isValid;
+}
+
+function isValidName(name) {
+  let isValid = false;
+  const patternName = /^[A-Z][a-z]{1,19}(-[A-Z][a-z]{0,18})?$/;
+  
+    if (!patternName.test(name)) {
+
+      if (/\b[A-Za-z]{20,}/.test(name)) 
+        errorText.textContent = "The part of name cannot be longer than 20 characters.";
+
+      else if (/\b[a-z]/.test(name)) 
+        errorText.textContent =  "Each part of the name must start with an uppercase letter.";
+
+      else if (/[^A-Za-z-]/.test(name)) 
+        errorText.textContent =  "Only letters and a hyphen as a separator are allowed.";
+
+      else if (/[A-Z][A-Z]/.test(name)) 
+        errorText.textContent =  "Only the first letter of each part should be uppercase.";
+
+      else if ((name.match(/-/g) || []).length > 1) 
+        errorText.textContent = "The name can have a maximum of two parts.";
+  
+      else if (/^-|-$|[a-z]-[A-Z]/.test(name)) 
+        errorText.textContent =  "The hyphen can only be used between two name parts.";
+
+      else if (/\b[A-Z](-|$)/.test(name)) 
+        errorText.textContent =  "Each name part must contain at least two letters.";
+
+      else if (/\s/.test(name)) 
+        errorText.textContent = "Spaces are not allowed in the name.";
+   
+    } else 
+      isValid = true;
+
+
+
+  return isValid;
+}
+
+function checkFormEmpty() {
+  let isValid = false;
+  let colorError = "#e77b7b";
+
+  do {
+    if (group_name_input.value === "selected") {
+      errorText.textContent = "Enter group name first."
+      group_name_input.style.backgroundColor = colorError;
+      break;
+    } 
+
+    if (first_name_input.value.trim() === "") {
+      errorText.textContent = "Enter first name first."
+      first_name_input.style.backgroundColor = colorError;
+      break;
+    }
+
+    if (last_name_input.value.trim() === "") {
+      errorText.textContent = "Enter last name first."
+      last_name_input.style.backgroundColor = colorError;
+      break;
+    }
+
+    if (gender_input.value === "selected") {
+      errorText.textContent = "Enter group name first."
+      gender_input.style.backgroundColor = colorError;
+      break;
+    } 
+
+    if (birth_date_input.value === "") {
+      errorText.textContent = "Enter date first."
+      birth_date_input.style.backgroundColor = colorError;
+      break;
+    }
+    
+    isValid = true;
+  } while (false);
 
   return isValid;
 }

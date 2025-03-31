@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadScript("./js/main.js");
 
-    if (currentPath === "students.html") {
+    if (currentPath === "index.html") {
       await loadScript("./js/table.js");
     }
 

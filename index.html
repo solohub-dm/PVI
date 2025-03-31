@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Student work management site. Page with a table of student data">
+    <meta name="description" content="Student`s work management site. Page with a table of student data">
     <title>Students</title>
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="./css/main.css" />
   </head>
 
@@ -119,6 +120,9 @@
                   </div>
                 </fieldset>
               </form>
+              <div class="error-panel">
+                <p class="error-text" id="error-text"></p>
+              </div>
             </div>
             <hr class="line-horizontal" />
             <div class="window-control-panel">
@@ -214,5 +218,15 @@
     </div>
 
     <script src="./js/components.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then(() => console.log("Service Worker registered"))
+          .catch((err) =>
+            console.error("Service Worker registration failed", err)
+          );
+      }
+    </script>
   </body>
 </html>
