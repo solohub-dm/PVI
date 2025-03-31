@@ -61,36 +61,21 @@ function closeInfo() {
   windowShadowPanelInfo.style.display = "none";
 }
 function openInfo(event) {
-  console.log("openInfo");
   if (window.innerWidth > 850) return;
-  console.log("after >");
 
   const clckElem = event.target;
   let td = clckElem.closest("td");
   if (!td) return;
 
-  console.log("td");
-  console.log(td);
-
   let colIndex = td.cellIndex;
   if (colIndex === 0 || colIndex === 6) return;
 
-  console.log("colIndex");
-  console.log(colIndex);
-
-  console.log("clckElem");
-  console.log(clckElem);
-
   const row = clckElem.closest("tr");
   const studentId = row.dataset.studentId;
-  console.log("colIndex");
 
   const studentIndex = students.findIndex((student) => student.id == studentId);
   const student = students[studentIndex];
   if (!student) return;
-
-  console.log("student");
-  console.log(student);
 
   group_name_span.textContent = student.group_name;
   first_name_span.textContent = student.full_name.split(" ")[0];
@@ -349,7 +334,6 @@ function checkFormValid() {
 }
 
 function checkCorrectValue() {
-  console.log("checkCorrectValue");
   let isValid = false;
   let colorError = "#e77b7b";
  

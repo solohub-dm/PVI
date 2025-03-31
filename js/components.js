@@ -40,9 +40,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadScript("./js/main.js");
 
-    if (currentPath === "index.html") {
+    // if (currentPath === "index.html") {
       await loadScript("./js/table.js");
-    }
+    // }
 
     const isOpen = localStorage.getItem("menuOpen") === "true";
     console.log("isOpen: " + isOpen);

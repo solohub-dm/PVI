@@ -59,7 +59,6 @@ notifIcon.addEventListener("click", () => {
 notifPanel.addEventListener("mouseenter", () => {
   if (isNotifOn) {
     isNotifOn = false;
-    console.log("isNotifOn: " + isNotifOn); 
     // notifIcon.animate(
     //   [
     //     { transform: "rotate( 0deg) translateX( 0px)"},
