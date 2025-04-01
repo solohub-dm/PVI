@@ -410,36 +410,41 @@ function isValidDate(date) {
 
 function isValidName(name) {
   let isValid = false;
-  const patternName = /^[A-Z][a-z]{1,19}(-[A-Z][a-z]{0,18})?$/;
+  const patternName = /^[A-Z]([a-z`']{1,17})?[a-z](-\b[A-Z]([a-z`']{0,17})?[a-z])?$/;
+
+
+  if (!patternName.test(name)) {
+    if (/@(.)*(\.com)/.test(name)) {
+      errorText.textContent = "Enter name, not email.";
+
+    } else if (/(\b[`']\B|\B[`']\b)/.test(name)) {
+      errorText.textContent = "Apostrophe is allowed in the middle of name.";
+    } else if (/\s/.test(name)) 
+      errorText.textContent = "Spaces are not allowed in the name.";
+    else if (/\b[A-Za-z]{20,}/.test(name)) 
+      errorText.textContent = "The part of name cannot be longer than 20 characters.";
+
+    else if (/\b[a-z]/.test(name)) 
+      errorText.textContent =  "Each part of the name must start with an uppercase letter.";
+
+    else if (/[^A-Za-z-]/.test(name)) 
+      errorText.textContent =  "Only letters and a hyphen as a separator are allowed.";
+
+    else if (/[A-Z][A-Z]/.test(name)) 
+      errorText.textContent =  "Only the first letter of each part should be uppercase.";
+
+    else if ((name.match(/-/g) || []).length > 1) 
+      errorText.textContent = "The name can have a maximum of two parts.";
+
+    else if (/\b[A-Z](-|$)/.test(name)) 
+      errorText.textContent =  "Each name part must contain at least two letters.";
+
+    else if (/^-|-$|[a-z]-[A-Z]/.test(name)) 
+      errorText.textContent =  "The hyphen can only be used between two name parts.";
+
   
-    if (!patternName.test(name)) {
-
-      if (/\b[A-Za-z]{20,}/.test(name)) 
-        errorText.textContent = "The part of name cannot be longer than 20 characters.";
-
-      else if (/\b[a-z]/.test(name)) 
-        errorText.textContent =  "Each part of the name must start with an uppercase letter.";
-
-      else if (/[^A-Za-z-]/.test(name)) 
-        errorText.textContent =  "Only letters and a hyphen as a separator are allowed.";
-
-      else if (/[A-Z][A-Z]/.test(name)) 
-        errorText.textContent =  "Only the first letter of each part should be uppercase.";
-
-      else if ((name.match(/-/g) || []).length > 1) 
-        errorText.textContent = "The name can have a maximum of two parts.";
-  
-      else if (/^-|-$|[a-z]-[A-Z]/.test(name)) 
-        errorText.textContent =  "The hyphen can only be used between two name parts.";
-
-      else if (/\b[A-Z](-|$)/.test(name)) 
-        errorText.textContent =  "Each name part must contain at least two letters.";
-
-      else if (/\s/.test(name)) 
-        errorText.textContent = "Spaces are not allowed in the name.";
-   
-    } else 
-      isValid = true;
+  } else 
+    isValid = true;
 
 
 
@@ -497,6 +502,7 @@ function tryAddRow() {
       birth_date_input.value,
       "disabled"
     );
+
     students.push(new_student);
     addRow(new_student);
     closeWindow();
@@ -626,6 +632,8 @@ function formattedDate(date) {
 }
 
 function editRow(student) {
+  console.log("editRow")
+
   const btnArray = Array.from(document.querySelectorAll("#icon-delete-row"));
 
   const rowIndex = btnArray.findIndex(
@@ -641,6 +649,7 @@ function editRow(student) {
       formattedDate(student.birth_date),
     ].forEach((text, i) => (row.children[i + 1].textContent = text));
   }
+  console.log(JSON.stringify(student, null, 2));
 }
 
 function loadPage() {
