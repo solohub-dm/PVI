@@ -9,8 +9,7 @@
 <body> 
 
   <header class="wrapper-header">
-        
-      <h1 class="text-logo"><a href="../index.html">CMS</a></h1>
+      <h1 class="text-logo"><a href="../index.php">CMS</a></h1>
       <div class="header-control-panel">
         <div class="notification-panel" id="notification-panel">
           <img src="./img/notification_off_rev2.png" alt="notification icon" id="icon-notification"/>

@@ -11,14 +11,13 @@ const notifIcon = getElement("#icon-notification");
 let isNotifOn = false;
 
 class Student {
-  static count = 0;
-  constructor(group, name, gender, birthday, status) {
-    this.id = Student.count++;
+  constructor(group, name, gender, birthday, status, id) {
     this.group_name = group;
     this.full_name = name;
     this.gender = gender;
     this.birth_date = birthday;
     this.status = status;
+    this.id = id;
   }
 }
 

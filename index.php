@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Student`s work management site. Page with a table of student data">
     <title>Students</title>
-    <link rel="manifest" href="/manifest.json">
+    <!-- <link rel="manifest" href="manifest.json"> -->
     <link rel="stylesheet" href="./css/main.css" />
   </head>
 
@@ -108,7 +108,7 @@
                   </div>
                   <div class="form-item">
                     <label for="select-gender">Gender</label>
-                    <select name="group" id="select-gender">
+                    <select name="gender" id="select-gender">
                       <option value="selected">Select gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -116,7 +116,7 @@
                   </div>
                   <div class="form-item">
                     <label for="birthday-date">Birthday</label>
-                    <input type="date" id="birthday-date" lang="en-GB" />
+                    <input type="date" name="birthday" id="birthday-date" lang="en-GB" />
                   </div>
                 </fieldset>
               </form>
@@ -218,7 +218,7 @@
     </div>
 
     <script src="./js/components.js"></script>
-    <script>
+    <!-- <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("/sw.js")
@@ -227,6 +227,6 @@
             console.error("Service Worker registration failed", err)
           );
       }
-    </script>
+    </script> -->
   </body>
 </html>

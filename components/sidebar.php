@@ -9,15 +9,15 @@
   <body >
     <div class="sidebar-body" id="sidebar-body">
       <div class="burger-menu" id="burger-menu">
-        <img src="/img/burger_rev.png" class="icon-burger-menu" id="icon-burger-menu" alt="burger menu">
+        <img src="img/burger_rev.png" class="icon-burger-menu" id="icon-burger-menu" alt="burger menu">
       </div>
   
       <aside class="wrapper-sidebar" id="wrapper-sidebar">
         <nav>
           <ul class="sidebar-menu" id="sidebar-menu">
-            <li><a class="sidebar-menu-item" href="./dashboard.html">Dashboard</a></li>
-            <li><a class="sidebar-menu-item" href="./index.html">Students</a></li>
-            <li><a class="sidebar-menu-item" href="./tasks.html">Tasks</a></li>
+            <li><a class="sidebar-menu-item" href="./dashboard.php">Dashboard</a></li>
+            <li><a class="sidebar-menu-item" href="./index.php">Students</a></li>
+            <li><a class="sidebar-menu-item" href="./tasks.php">Tasks</a></li>
           </ul>
         </nav>
       </aside>

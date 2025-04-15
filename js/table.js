@@ -73,7 +73,7 @@ function openInfo(event) {
   const row = clckElem.closest("tr");
   const studentId = row.dataset.studentId;
 
-  const studentIndex = students.findIndex((student) => student.id == studentId);
+  const studentIndex = students.findIndex((student) => student.id === studentId);
   const student = students[studentIndex];
   if (!student) return;
 
@@ -171,15 +171,10 @@ function openConfirmWindowOne(event) {
 }
 
 function deleteIconClick(row) {
-  row.remove();
-
-  let cbx = row.cells[0].firstElementChild;
-
   const studentId = row.dataset.studentId;
-  const studentIndex = students.findIndex((student) => student.id == studentId);
-  if (studentIndex !== -1) {
-    students.splice(studentIndex, 1);
-  }
+  deleteStudent(studentId);
+
+  row.remove();
 
   const anyChecked = Array.from(bodyCbxItems).some(
     (checkbox) => checkbox.checked
@@ -197,6 +192,41 @@ function openConfirmWindowAll() {
     "Are you sure to delete all unlocked rows in the table?";
   confirmConfirmWindowButton.onclick = deleteUnlockRow;
 }
+
+async function deleteStudent(studentId) {
+  try {
+    console.log("studentId: ", studentId);
+
+    const response = await fetch("php/del_student.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `id=${encodeURIComponent(studentId)}`
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      console.log("Student deleted successfully");
+
+      const index = students.findIndex(
+        student => student.id === studentId
+      );
+      if (index !== -1) {
+        students.splice(index, 1);
+      }
+
+    } else {
+      console.error("Failed to delete student:", result.error);
+      errorText.textContent = `Error: ${result.error}`;
+    }
+  } catch (err) {
+    console.error("Fetch error:", err);
+    errorText.textContent = "Network error. Please try again.";
+  }
+}
+
 function deleteUnlockRow() {
   if (headCbxItem.checked) {
     const rows = tableBody.querySelectorAll("tr");
@@ -204,20 +234,15 @@ function deleteUnlockRow() {
     rows.forEach((row) => {
       let cbx = row.cells[0].firstElementChild;
       if (cbx.checked) {
-        row.remove();
 
         // const cbxIndex = bodyCbxItems.findIndex((checkbox) => checkbox == cbx);
         // if (cbxIndex !== -1) {
         //   bodyCbxItems.splice(cbxIndex, 1);
         // }
-
         const studentId = row.dataset.studentId;
-        const studentIndex = students.findIndex(
-          (student) => student.id == studentId
-        );
-        if (studentIndex !== -1) {
-          students.splice(studentIndex, 1);
-        }
+        deleteStudent(studentId)
+
+        row.remove();
       }
     });
     headCbxItem.checked = false;
@@ -328,8 +353,29 @@ birth_date_input.addEventListener("input", checkCorrectValue);
 group_name_input.addEventListener("focus", checkCorrectValue);
 gender_input.addEventListener("focus", checkCorrectValue);
 
-function checkFormValid() {
-  if (!checkCorrectValue() || !checkFormEmpty()) return false;
+async function checkFormValid() {
+  if (!checkCorrectValue() || !checkFormEmpty()) {
+    console.log("checkFormValid: false");
+    return false;
+  }
+
+  const fields = [
+    { name: "first-name", value: first_name_input.value },
+    { name: "last-name", value: last_name_input.value },
+    { name: "birthday", value: birth_date_input.value },
+    { name: "group", value: group_name_input.value },
+    { name: "gender", value: gender_input.value }
+  ];
+
+  for (const { name, value } of fields) {
+    const hasError = await validateFieldServer(name, value);
+    if (hasError) {
+      console.log("checkFormValid: false");
+      return false;
+    }
+  }
+
+  console.log("checkFormValid: true");
   return true;
 }
 
@@ -418,9 +464,11 @@ function isValidName(name) {
       errorText.textContent = "Enter name, not email.";
 
     } else if (/(\b[`']\B|\B[`']\b)/.test(name)) {
-      errorText.textContent = "Apostrophe is allowed in the middle of name.";
+      errorText.textContent = "Apostrophe is allowed only in the middle of name.";
+      
     } else if (/\s/.test(name)) 
       errorText.textContent = "Spaces are not allowed in the name.";
+
     else if (/\b[A-Za-z]{20,}/.test(name)) 
       errorText.textContent = "The part of name cannot be longer than 20 characters.";
 
@@ -430,7 +478,7 @@ function isValidName(name) {
     else if (/[^A-Za-z-]/.test(name)) 
       errorText.textContent =  "Only letters and a hyphen as a separator are allowed.";
 
-    else if (/[A-Z][A-Z]/.test(name)) 
+    else if (/[A-Z](.)*[A-Z]/.test(name)) 
       errorText.textContent =  "Only the first letter of each part should be uppercase.";
 
     else if ((name.match(/-/g) || []).length > 1) 
@@ -442,11 +490,11 @@ function isValidName(name) {
     else if (/^-|-$|[a-z]-[A-Z]/.test(name)) 
       errorText.textContent =  "The hyphen can only be used between two name parts.";
 
+    else  
+      errorText.textContent =  "Uncorrect name format.";
   
   } else 
     isValid = true;
-
-
 
   return isValid;
 }
@@ -492,20 +540,195 @@ function checkFormEmpty() {
   return isValid;
 }
 
-createTableButton.addEventListener("click", tryAddRow);
-function tryAddRow() {
-  if (checkFormValid()) {
-    const new_student = new Student(
-      group_name_input.value,
-      first_name_input.value + " " + last_name_input.value,
-      gender_input.value,
-      birth_date_input.value,
-      "disabled"
-    );
+async function validateFieldServer(field, value) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 3000);
 
-    students.push(new_student);
-    addRow(new_student);
-    closeWindow();
+  console.log(`Validating field "${field}" with value: "${value}"`);
+
+  try {
+    const response = await fetch('php/validation.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `field=${encodeURIComponent(field)}&value=${encodeURIComponent(value)}`,
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      console.error(`Server returned error: ${response.status}`); // LOG
+      if (typeof errorText !== "undefined") {
+        errorText.textContent = `Server returned error: ${response.status}`;
+      }
+      return 1;
+    }
+
+    const data = await response.json();
+    console.log(`Server response for "${field}":`, data); // DEBUG LOG
+
+    const input = document.querySelector(`[name="${field}"]`);
+    if (!input) {
+      console.warn(`Input element not found for field: ${field}`);
+    }
+
+    if (!data.valid) {
+      if (input) input.style.backgroundColor = "#e77b7b";
+
+      if (data.errors && data.errors[field]) {
+        if (typeof errorText !== "undefined") {
+          errorText.textContent = "Server validation error: " + data.errors[field];
+        }
+        console.warn(`Validation failed: ${data.errors[field]}`); // LOG
+      } else {
+        if (typeof errorText !== "undefined") {
+          errorText.textContent = "Unknown validation error.";
+        }
+        console.warn("Validation failed: Unknown reason."); // LOG
+      }
+
+      return 1;
+    } else {
+      if (input) input.style.backgroundColor = "#ffffff";
+      return 0;
+    }
+
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      console.error("Server response timeout"); // LOG
+      if (typeof errorText !== "undefined") {
+        errorText.textContent = "Server took too long to respond. Please try again later.";
+      }
+    } else {
+      console.error("Fetch error:", error); // LOG
+      if (typeof errorText !== "undefined") {
+        errorText.textContent = "Network or server error occurred: " + error.message;
+      }
+    }
+    return 1;
+  }
+}
+
+
+createTableButton.addEventListener("click", tryAddRow);
+
+async function tryAddRow() {
+
+  const isValid = await checkFormValid();
+
+  if (!isValid) {
+    console.log("Form is not valid.");
+    return;
+  }
+
+  const studentData = {
+    first_name: first_name_input.value,
+    last_name: last_name_input.value,
+    birthday: birth_date_input.value,
+    group: group_name_input.value,
+    gender: gender_input.value
+  };
+
+  try {
+    const response = await fetch("php/add_student.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams(studentData)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      console.log("Student added successfully");
+
+      outAllStudents();
+      closeWindow();
+
+      if (result.password) {
+        alert("Student added. Temporary password: " + result.password);
+      }
+
+    } else {
+      console.error("Server error:", result.errors);
+      errorText.textContent = Object.values(result.errors).join(" ");
+    }
+  } catch (error) {
+    console.error("Network/server error:", error);
+    errorText.textContent = "Could not connect to server.";
+  }
+}
+
+function outAllStudents() {
+  console.log("outAllStudents");
+  tableBody.innerHTML = "";
+  const loadedStudents = loadStudents();
+  loadedStudents.then((students) => {
+    students.forEach(student => {
+      addRow(student);
+    });
+  }).catch(err => {
+    console.error("Error processing students:", err);
+  });
+}
+
+const visibilityChangeEvent = document.hidden ? "visibilitychange" : "webkitvisibilitychange";
+
+document.addEventListener(visibilityChangeEvent, function() {
+  if (document.hidden) {
+    console.log("The tab is inactive.");
+  } else {
+    console.log("The tab is active.");
+    if (window.location.pathname.includes("index.php")) {
+      outAllStudents();
+    }
+  }
+});
+
+async function loadStudents() {
+  try {
+    const response = await fetch("php/get_students.php");
+    const result = await response.json();
+
+    if (!result.success) {
+      console.error("Error loading students:", result.error);
+      return [];
+    }
+
+    const loadedStudents = [];
+    if (Array.isArray(result.students)) {
+
+      result.students.forEach(studentData => {
+
+        console.log(studentData);
+
+        const new_student = new Student(
+          studentData.GroupName,
+          studentData.FirstName + " " + studentData.LastName,
+          studentData.Gender,
+          studentData.Birthday,
+          studentData.Status,
+          Number(studentData.Id)
+        );
+
+        console.log(new_student);
+
+        loadedStudents.push(new_student);
+      });
+
+    } else {
+      console.error("No students array found in the response.");
+      return [];
+    }
+
+    return loadedStudents;
+
+  } catch (err) {
+    console.error("Fetch error:", err);
+    return []; 
   }
 }
 
@@ -527,9 +750,6 @@ function createElem(tag) {
   return document.createElement(`${tag}`);
 }
 function addRow(new_student) {
-  if (usernameText.textContent === new_student.full_name) {
-    new_student.status = "active";
-  }
 
   const new_row = createElem("tr");
   let container = createElem("div");
@@ -560,7 +780,7 @@ function addRow(new_student) {
   img_stat.className = "icon-status";
   img_stat.alt = "status";
 
-  if (new_student.status == "active") img_stat.src = "./img/status_on.png";
+  if (new_student.status === true) img_stat.src = "./img/status_on.png";
   else img_stat.src = "./img/menu_opt.png";
 
   container.className = "table-button-panel";
@@ -608,7 +828,7 @@ function editIconClick(event) {
     event.stopPropagation();
 
     const studentIndex = students.findIndex(
-      (student) => student.id == studentId
+      (student) => student.id === studentId
     );
     if (studentIndex !== -1) {
       student = students[studentIndex];
@@ -637,7 +857,7 @@ function editRow(student) {
   const btnArray = Array.from(document.querySelectorAll("#icon-delete-row"));
 
   const rowIndex = btnArray.findIndex(
-    (btn) => btn.dataset.studentId == student.id
+    (btn) => btn.dataset.studentId === student.id
   );
 
   if (rowIndex !== -1) {
@@ -651,18 +871,3 @@ function editRow(student) {
   }
   console.log(JSON.stringify(student, null, 2));
 }
-
-function loadPage() {
-  const new_student = new Student(
-    "PZ-21",
-    "Dmytro Solohub",
-    "Male",
-    "2006-07-24",
-    ""
-  );
-  students.push(new_student);
-  addRow(new_student);
-}
-avatarIcon.addEventListener("click", () => {
-  loadPage();
-});

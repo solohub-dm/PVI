@@ -26,8 +26,10 @@ function loadScript(scriptSrc) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    await includeHTML("./components/header.html", "header-placeholder");
-    await includeHTML("./components/sidebar.html", "sidebar-placeholder");
+    console.log("load");
+
+    await includeHTML("/website/components/header.php", "header-placeholder");
+    await includeHTML("/website/components/sidebar.php", "sidebar-placeholder");
 
     let currentPath = window.location.pathname.split("/").pop();
     const navItems = document.querySelectorAll(".sidebar-menu-item");
@@ -40,12 +42,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadScript("./js/main.js");
 
-    // if (currentPath === "index.html") {
+    if (currentPath === "index.php") {
       await loadScript("./js/table.js");
-    // }
+      outAllStudents();
+    }
+
 
     const isOpen = localStorage.getItem("menuOpen") === "true";
-    console.log("isOpen: " + isOpen);
     if (isOpen) {
       sidebarWrapper.classList.add("no-transition");
       openSidebar();
@@ -65,6 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         notificationIcon.classList.remove('active');
       }
     });
+
 
   } catch (error) {
     console.error("Error during initialization:", error);

@@ -7,16 +7,15 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-      <div id="header-placeholder"></div>
-      <div id="sidebar-placeholder"></div>
-      <div class="wrapper-main" id="wrapper-main">
-        <main>
-          <!-- <h2>Tasks</h2> -->
-        </main>
-      </div>
-      <footer></footer>
+    <div id="header-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+    <div class="wrapper-main" id="wrapper-main">
+      <main>
+        <!-- <h2>Tasks</h2> -->
+      </main>
+    </div>
+    <footer></footer>
 
     <script src="./js/components.js"></script>
   </body>
-    
 </html>
