@@ -1,0 +1,20 @@
+{
+    // Використовуємо правильний порт, де слухає розширення Live Server
+    "liveServer.settings.port": 5502,
+
+    // Вмикаємо проксі, щоб працювати з реальним сервером (XAMPP localhost)
+    "liveServer.settings.proxy": {
+        "enable": true,
+        "baseUri": "/",
+        "proxyUri": "http://localhost/website/"
+    },
+
+    // Відкривати сайт не в режимі прив'язки до localhost, а через Live Server
+    "liveServer.settings.useLocalIp": true,
+
+    // Не вставляти зайві скрипти без дозволу (іноді корисно при CSP обмеженнях)
+    "liveServer.settings.noBrowser": false,
+
+    // Відкривати автоматично в браузері після старту
+    "liveServer.settings.wait": 250
+}

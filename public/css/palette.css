@@ -1,0 +1,44 @@
+:root {
+	--transperent: rgba(0, 0, 0, 0);
+	--shadow: #20222bcb;
+	--shadow-lite: hsla(229, 15%, 15%, 0.36);
+
+	--white-normal: #f8fcff;
+	--white-accent: white;
+
+	--darkblue: #33363F;
+
+	--header-normal: #33363F;
+	--header-accent: #20222b;
+
+	--aside-normal: #4f535f;
+
+	--error-accent: #fd9e9e;
+
+	--font-decorative:  Cambria, Cochin, Georgia, serif;
+	--font-informative: 'Arial Narrow', Arial, sans-serif;
+	
+
+	/* --darkblue: #33363F;
+
+	--header-normal: #93AB9D;
+	--header-accent: #6c8878;
+
+	--aside-normal: #c4d6cc; */
+
+	/* --header-normal: cadetblue;
+	--header-accent: teal;
+
+	--aside-normal: rgb(139, 193, 196); */
+
+	/* 
+	--darkblue: #273b4a;
+
+	--header-normal: #273b4a;
+	--header-accent: #1e2e3a;
+
+	--aside-normal: #476074; */
+
+	/* --white-normal: aliceblue; */
+
+}

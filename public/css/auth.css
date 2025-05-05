@@ -1,0 +1,248 @@
+#wrapped-shadow-panel-login {
+  background-color: var(--aside-normal);
+  display: block;  
+}
+
+#wrapped-window-panel-login .window-button-rev {
+  margin: 0;
+  margin-top: 12px;
+  width: 100%;
+  max-width: 100%;
+}
+
+#wrapped-window-panel-login label {
+  min-width: 90px;
+}
+
+#wrapped-window-panel-login {
+  max-width: 800px;
+  min-height: 475px;
+  max-height: 475px;
+  width: 85%;
+  height: 75%;
+
+  flex-direction: row;
+  overflow: hidden;
+}
+
+#wrapped-window-panel-login .form-item {
+  margin-bottom: 10px;
+}
+
+#wrapped-window-panel-login .text-window-title {
+  align-self: center;
+}
+
+#form-item-group {
+  display: none;
+}
+
+.form-half {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  gap: 16px;
+  justify-content: center;
+
+  position: relative;
+  transition: flex 0.5s ease, transform 0.5s ease; 
+}
+
+.signin-mode #form-left {
+  padding: 20px 4% 40px;
+}
+.register-mode #form-left {
+  padding: 20px 6% 40px;
+}
+
+.form-half-text-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  width: 90%;
+  max-width: 300px;
+
+  position: absolute;
+  transform: translateX(-100%);
+  transition: opacity 0.6s ease, transform 0.4s ease;
+  top: 35%;
+}
+
+.form-half-text-panel a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form-half-text-panel p {
+  font-size: 16px;
+  font-family: var(--font-informative);
+  line-height: 1.5;
+}
+
+#welcome-title {
+  color: var(--white-accent);
+}
+
+#form-right {
+  align-items: center;
+  background: var(--header-normal);
+  color: var(--white-accent);
+  text-align: center;
+}
+
+
+
+.register-mode #span-reg,
+.register-mode #auth-title-sign,
+.register-mode #confirm-password-field,
+.register-mode #additional-fields {
+  display: block;
+}
+
+.signin-mode #span-reg,
+.signin-mode #auth-title-reg,
+.signin-mode #confirm-password-field,
+.signin-mode #additional-fields {
+  display: none;
+}
+
+.register-mode #span-reg {
+  display: block;
+}
+.register-mode #auth-title-reg,
+.register-mode #confirm-password-field {
+  display: flex;
+}
+
+.register-mode #span-sign,
+.register-mode #auth-title-sign,
+.signin-mode #confirm-password-field {
+  display: none;
+}
+
+.register-mode #form-half-register {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s; 
+}
+
+.register-mode #form-half-sign-in {
+  opacity: 0;
+  transform: translateX(100%); 
+  transition-delay: 0s; 
+  pointer-events: none;
+}
+
+.signin-mode #form-half-sign-in {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+.signin-mode #form-half-register {
+  opacity: 0;
+  pointer-events: none;
+
+  transform: translateX(-100%); 
+  transition-delay: 0s; 
+}
+
+.register-mode #form-left {
+  justify-content: flex-start;
+}
+
+#wrapped-window-panel-login .form-item {
+  padding: 0;
+}
+
+@media screen and (min-width: 650px) {
+  .register-mode #form-left {
+    order: 2;
+    width: 55%;
+  }
+  
+  .register-mode #form-right {
+    order: 1;
+    width: 45%;
+  }
+  
+  .signin-mode #form-left {
+    order: 1;
+    width: 45%;
+  }
+  
+  .signin-mode #form-right {
+    order: 2;
+    width: 55%;
+  }
+}
+
+
+@media screen and (max-width: 650px) {
+  #wrapped-window-panel-login {
+    max-height: 660px;
+    min-height: 150px;
+    max-width: 400px;
+    min-width: 260px;
+
+    width: 80%;
+    flex-direction: column; 
+    top: 49.5% 
+  }
+
+  #wrapped-window-panel-login.signin-mode {
+    height: calc(380px); 
+  }
+
+  #wrapped-window-panel-login.register-mode  {
+    height: calc(700px); 
+  }
+  .signin-mode #form-left,
+  .register-mode #form-left  {
+    max-height: 100%;
+    height: 100%;
+    order: 2; 
+    max-width: 100%;
+    width: 100%;
+    padding: 15px 10% 25px;
+  }
+
+  .form-half-text-panel {
+    gap: 8px;
+    top: 0%;
+    padding: 22px 0;
+  }
+
+  #form-right {
+    min-height: 170px;
+    order: 1;
+  }
+
+  body {
+    overflow-y: auto; 
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+
+  #wrapped-window-panel-login {
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    top: 50%;
+    border-radius: 0;
+    overflow-y: auto; 
+  }
+
+  #form-left {
+    justify-content: flex-start;
+  }
+}
+

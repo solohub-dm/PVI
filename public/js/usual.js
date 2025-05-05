@@ -1,0 +1,1 @@
+const getElement = document.querySelector.bind(document);
