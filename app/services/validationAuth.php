@@ -4,14 +4,15 @@ require_once __DIR__ . './validation.php';
 function validateAuthData($data) {
   $errors = [];
 
-  if (!isNotEmpty($data['email'])) {
+  if (isEmpty($data['email'])) {
     $errors['email'] = 'Email is required.';
-  }
-  if (!isValidEmail($data['email'])) {
+  } elseif (!isValidEmailGeneral($data['email'])) {
     $errors['email'] = 'Invalid email format.';
-  }
-  if (!isNotEmpty($data['password'])) {
+    
+  } elseif (isEmpty($data['password'])) {
     $errors['password'] = 'Password is required.';
+  } elseif (!isValidPassword($data['password'])) {
+    $errors['password'] = 'Invalid password format.';
   }
 
   return $errors;

@@ -28,15 +28,23 @@
         <h3 class="text-window-title" id="auth-title-sign">Sign In</h3>
         <form id="auth-form">
 
-          <div id="additional-fields">
+          <div id="additional-fields" autocomplete="off">
             
             <div class="form-item">
               <label for="first-name">First Name</label>
               <input type="text" id="first-name" name="first-name" autocomplete="off">
+              <div class="error-message" id="error-first-name">
+                <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                <span class="error-text-content"></span>
+              </div>
             </div>
             <div class="form-item">
               <label for="last-name">Last Name</label>
               <input type="text" id="last-name" name="last-name" autocomplete="off">
+              <div class="error-message" id="error-last-name">
+                <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                <span class="error-text-content"></span>
+              </div>
             </div>
             <div class="form-item">
               <label for="gender">Gender</label>
@@ -45,46 +53,65 @@
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+              <div class="error-message" id="error-gender">
+                <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                <span class="error-text-content"></span>
+              </div>
             </div>
             <div class="form-item">
               <label for="role">Role</label>
               <select id="role" name="role">
                 <option value="selected">Select role</option>
-                <option value="Student">Student</option>
-                <option value="Teacher">Teacher</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
               </select>
+              <div class="error-message" id="error-role">
+                <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                <span class="error-text-content"></span>
+              </div>
             </div>
-            <div class="form-item" id="form-item-group" >
+            <div class="form-item" id="form-item-group">
               <label for="group">Group</label>
-              <div class="custom-select-input" id="custom-select-input-group">
-                <input
-                  type="text"
-                  id="group-input"
-                  name="group"
-                  autocomplete="off"
-                  placeholder="Type to search..."
-                />
-                <ul class="dropdown-list" id="dropdown-list-group" style="display:none;"></ul>
+              <input type="text" id="group" name="group" autocomplete="off">
+              <div class="error-message" id="error-group">
+                <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                <span class="error-text-content"></span>
               </div>
             </div>
 
             <div class="form-item">
               <label for="birthday">Birthday</label>
               <input type="date" id="birthday" name="birthday">
+              <div class="error-message" id="error-birthday">
+                <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                <span class="error-text-content"></span>
+              </div>
             </div>
           </div>
 
           <div class="form-item" id="email-field">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" autocomplete="off">
+            <div class="error-message" id="error-email">
+              <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+              <span class="error-text-content"></span>
+            </div>
           </div>
           <div class="form-item" id="password-field">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" autocomplete="off">
+            <div class="error-message" id="error-password">
+              <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+              <span class="error-text-content"></span>
+            </div>
           </div>
           <div class="form-item" id="confirm-password-field">
             <label for="confirm-password">Repeat</label>
             <input type="password" id="confirm-password" name="confirm-password" autocomplete="off">
+            <div class="error-message" id="error-confirm-password">
+              <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+              <span class="error-text-content"></span>
+            </div>
           </div>
      
           
@@ -115,48 +142,8 @@
     </div>
   </div>
 
-  <script src="./js/usual.js"></script>
-  <script src="./js/custom.js"></script>
-
-  <script>
-    const groupField = getElement("#form-item-group");
-    const roleInput = getElement("#role");
-    roleInput.addEventListener("change", function () {
-      const selectedValue = roleInput.value;
-      if (selectedValue === "Student") {
-        groupField.style.display = "flex";
-      } else {
-        groupField.style.display = "none";
-      }
-    });
-
-    const toggleAuthModeButtonReg = document.getElementById('toggle-auth-mode-reg');
-    const toggleAuthModeButtonSign = document.getElementById('toggle-auth-mode-sign');
-    const authTitle = document.getElementById('auth-title');
-    const authSubmitButton = document.getElementById('auth-submit');
-    const welcomeTitle = document.getElementById('welcome-title');
-    const welcomeText = document.getElementById('welcome-text');
-    const panel = document.getElementById('wrapped-window-panel-login');
-
-    let isRegisterMode = false;
-
-    function toggleAuthMode() {
-      isRegisterMode = !isRegisterMode;
-
-      panel.classList.toggle('register-mode', isRegisterMode);
-      panel.classList.toggle('signin-mode', !isRegisterMode);
-    }
-
-    toggleAuthModeButtonReg.addEventListener('click', toggleAuthMode);
-    toggleAuthModeButtonSign.addEventListener('click', toggleAuthMode);
-
-    const groupsArray = ["54321", "65432", "76543"];
-
-    setupAutocomplete(
-      "#group-input",
-      "#dropdown-list-group",
-      groupsArray
-    );
-  </script>
+  <!-- <script src="./js/custom.js"></script> -->
+  <script src="./js/valid.js"></script>
+  <script src="./js/auth.js"></script>
 </body>
 </html>

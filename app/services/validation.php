@@ -1,7 +1,7 @@
 <?php
 
-function isNotEmpty($value) {
-  return isset($value) && trim($value) !== '';
+function isEmpty($value) {
+  return isset($value) && (trim($value) === '' || $value === 'selected');
 }
 
 function isValidName($name) {
@@ -24,11 +24,22 @@ function isValidDate($date) {
 }
 
 function isValidEmail($email, $role = 'student') {
-  if ($role === 'student') {
-    $pattern = "/^([a-z`']+)\.([a-z`']+)\.([a-z`']{1,4})\.(\d{4})@lpnu\.ua$/i";
-  } else {
-    $pattern = "/^[a-z0-9-.]+@lpnu\.ua$/i";
+  switch ($role) {
+    case 'student':
+      return isValidEmailStudent($email);
+    default:
+      return isValidEmailGeneral($email);
   }
+}
+
+function isValidEmailStudent($email) {
+  $pattern = "/^([a-z`']+)\.([a-z`']+)\.([a-z`']{1,4})\.(\d{4})@lpnu\.ua$/i";
+  return preg_match($pattern, $email) === 1;
+}
+
+function isValidEmailGeneral($email) {
+
+  $pattern = "/^[a-z0-9-.]+@lpnu\.ua$/i";
   return preg_match($pattern, $email) === 1;
 }
 
@@ -36,3 +47,14 @@ function isValidGender($gender) {
   return in_array($gender, ['Male', 'Female']);
 }
 
+function isValidPassword($password) {
+  if (
+    !preg_match('/^[A-Za-z0-9_!]+$/', $password) ||
+    strlen($password) < 7 ||
+    !preg_match('/[A-Z]/', $password) || 
+    !preg_match('/[a-z]/', $password) ||
+    !preg_match('/\d/', $password)
+  ) return false;
+  
+  return true;
+}

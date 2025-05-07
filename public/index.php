@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/api/auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -145,7 +149,7 @@
           </div>
           
           <div class="table-control-panel">
-            <img src="./img/icon/add.png" alt="add student" id="icon-add-row" />
+            <!-- <img src="./img/icon/add.png" alt="add student" id="icon-add-row" /> -->
             <img
               src="./img/icon/delete.png"
               alt="delete students"
@@ -194,7 +198,7 @@
           </div>
         </div>
 
-        <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-redact">
+        <!-- <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-redact">
           <div class="wrapped-window-panel" id="wrapped-window-panel-redact">
             <div class="window-panel" id="window-panel-redact">
               <h3 class="text-window-title" id="add_student">Add student</h3>
@@ -279,7 +283,7 @@
               <button class="window-button" id="button-confirm">Confirm</button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-info">
           <div class="wrapped-window-panel" id="wrapped-window-panel-info">

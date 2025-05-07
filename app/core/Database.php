@@ -5,7 +5,7 @@ class Database {
 
   private static function loadConfig() {
     if (self::$config === null) {
-      self::$config = require __DIR__ . '/../config/config.php';
+      self::$config = require __DIR__ . '/../config/config_database.php';
     }
   }
 

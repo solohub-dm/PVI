@@ -51,7 +51,7 @@
           <p class="profile-username" id="profile-username">Dmytro Solohub</p>
           <div id="wrapper-profile-menu">
             <p class="profile-menu-item"><a href="./profile.php">Profile</a></p>
-            <p class="profile-menu-item"><a href="#">Log out</a></p>
+            <p class="profile-menu-item" id="profile-menu-item-logout"><a href="#">Log out</a></p>
           </div>
         </div>
     </div>

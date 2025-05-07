@@ -19,7 +19,7 @@ class Session {
   public static function destroy() {
     self::start();
     session_destroy();
-    $_SESSION = []; 
+    $_SESSION = [];
   }
 }
 

@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . './api/auth_check.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,34 +147,34 @@
             <option value="Female">Female</option>
         </select>
         </div>
+        <!-- <div class="form-item"> -->
+        <!-- <label for="group">Group</label>
+          <select id="group" name="group">
+              <option value="selected">Select group</option>
+              <option value="PZ-21">PZ-21</option>
+              <option value="PZ-22">PZ-22</option>
+              <option value="PZ-23">PZ-23</option>
+              <option value="PZ-24">PZ-24</option>
+              <option value="PZ-25">PZ-25</option>
+              <option value="PZ-26">PZ-26</option>
+          </select>
+        </div> -->
         <div class="form-item">
-        <label for="group">Group</label>
-        <select id="group" name="group">
-            <option value="selected">Select group</option>
-            <option value="PZ-21">PZ-21</option>
-            <option value="PZ-22">PZ-22</option>
-            <option value="PZ-23">PZ-23</option>
-            <option value="PZ-24">PZ-24</option>
-            <option value="PZ-25">PZ-25</option>
-            <option value="PZ-26">PZ-26</option>
-        </select>
+          <label for="birthday">Birthday</label>
+          <input type="date" id="birthday" name="birthday">
         </div>
-        <div class="form-item">
-        <label for="birthday">Birthday</label>
-        <input type="date" id="birthday" name="birthday">
+        <!-- <div class="form-item" id="email-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="off">
+        </div> -->
+        <div class="form-item" id="password-field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="off">
         </div>
-        <div class="form-item" id="email-field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" autocomplete="off">
-          </div>
-          <div class="form-item" id="password-field">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" autocomplete="off">
-          </div>
-          <div class="form-item" id="confirm-password-field">
-            <label for="confirm-password">Repeat</label>
-            <input type="password" id="confirm-password" name="confirm-password" autocomplete="off">
-          </div>
+        <div class="form-item" id="confirm-password-field">
+          <label for="confirm-password">Repeat</label>
+          <input type="password" id="confirm-password" name="confirm-password" autocomplete="off">
+        </div>
       </fieldset>
       <div class="error-panel">
         <p class="error-text" id="error-text-profile"></p>

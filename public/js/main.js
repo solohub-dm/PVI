@@ -3,7 +3,6 @@ const getElement = document.querySelector.bind(document);
 const profilePanel = getElement("#profile-panel");
 const profileMenu = getElement("#wrapper-profile-menu");
 
-
 const notifPanel = getElement("#notification-panel");
 const notifMenu = getElement("#wrapper-message-menu");
 const notifIcon = getElement("#icon-notification");
@@ -113,4 +112,23 @@ function openSidebar() {
 function closeSidebar() {
   sidebarBody.classList.remove("sidebar-open");
   localStorage.setItem("menuOpen", "false");
+}
+
+const logoutButton = getElement("#profile-menu-item-logout");
+logoutButton.addEventListener("click", logout);
+
+console.log("Logout button", logoutButton);
+
+function logout() {
+
+  fetch('./api/logout.php', {
+    method: 'POST'
+  })
+  .then(response => {
+    // localStorage.removeItem('user');
+    window.location.href = './auth.php';
+  })
+  .catch(() => {
+    alert('Logout failed. Please try again later.');
+  });
 }
