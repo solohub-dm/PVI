@@ -1,11 +1,17 @@
 <?php
+
+require_once __DIR__ . '/../core/Session.php';
+require_once __DIR__ . '/../services/validation_concrete/validationRegistr.php';
+require_once __DIR__ . '/../services/avatarGenerator.php';
+
 require_once __DIR__ . '/../models/users/User.php';
 require_once __DIR__ . '/../models/users/Student.php';
 require_once __DIR__ . '/../models/users/Teacher.php';
+
 require_once __DIR__ . '/../models/structure/Group.php';
-require_once __DIR__ . '/../core/Session.php';
-require_once __DIR__ . '/../services/validationRegistr.php';
-require_once __DIR__ . '/AvatarController.php';
+
+require_once __DIR__ . '/../models/tables/TeacherTables.php';
+require_once __DIR__ . '/../models/tables/StudentTables.php';
 
 class RegisterController
 {
@@ -50,7 +56,8 @@ class RegisterController
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'gender' => $gender,
-				'birthday' => $birthday
+				'birthday' => $birthday,
+				'status' => 1
 			];
 			if ($role === 'student') {
 					$data['group_name'] = $group_name;
@@ -64,7 +71,10 @@ class RegisterController
 				$user->role = $role;
 				User::setRememberToken($user);
 
-				$class::addGeneratedAvatar($user);
+        $avatarPath = getGenerateAvatar($user);
+        $class::updateAvatar($user->id, $avatarPath);
+        $user->url_avatar = $avatarPath;
+			 }
 			
 				$userData = [
 					'id' => $user->id,
@@ -72,15 +82,16 @@ class RegisterController
 					'first_name' => $user->first_name,
 					'last_name' => $user->last_name,
 					'url_avatar' => $user->url_avatar,
-					'role' => $user->role
-				];
-				
-				Session::set('user', $userData);
-				
-				echo json_encode(['success' => true, 'user' => $userData]);
-			} else {
-					echo json_encode(['success' => false, 'message' => 'Registration failed']);
-			}
-    }
+					'role' => $user->role,
+          'birthday' => $user->birthday,
+          'gender' => $user->gender 
+			];
+			
+			Session::set('user', $userData);
+			
+			echo json_encode(['success' => true, 'user' => $userData]);
+		} else {
+				echo json_encode(['success' => false, 'message' => 'Registration failed']);
+		}
 	}
 }

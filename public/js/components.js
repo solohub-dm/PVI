@@ -24,6 +24,8 @@ function loadScript(scriptSrc) {
   });
 }
 
+let role;
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     console.log("load");
@@ -45,7 +47,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (currentPath === "index.php") {
       await loadScript("./js/custom.js");
       await loadScript("./js/table.js");
-      // outAllStudents();
+
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      role = user ? user.role : null;
+      console.log("User role:", role);
+      const deleteTableIcon = getElement("#icon-delete-table");
+      if (role === "student") {
+        deleteTableIcon.style.display = "none";
+      }
     }
 
     await loadScript("./js/valid.js");
@@ -72,7 +81,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }); 
 
-   
+    console.log("DOMContentLoaded");
+
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    console.log("User data:", user);
+    const avatarIcon = document.getElementById('icon-profile-avatar');
+    const usernameText = document.getElementById('profile-username');
+  
+    if (user) {
+      if (avatarIcon && user.url_avatar) {
+        avatarIcon.src = '../' + user.url_avatar;
+      }
+      if (usernameText && user.first_name && user.last_name) {
+        usernameText.textContent = `${user.first_name} ${user.last_name}`;
+      }
+    }
+
+    const paginationSize = document.getElementById("pagination-size");
+  if (paginationSize && paginationSize.value) {
+    const pageSize = parseInt(paginationSize.value, 10) || 5;
+    initRowsPool(pageSize);
+    const savedTableId = localStorage.getItem('selectedTableId');
+    if (savedTableId) {
+      openTableById(savedTableId);
+    }
+  }
+
 
   } catch (error) {
     console.error("Error during initialization:", error);

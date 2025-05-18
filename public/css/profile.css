@@ -1,0 +1,122 @@
+.wrapped-window-panel-profile {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--white-normal);
+  border: 2px solid var(--darkblue);
+  border-radius: 8px;
+  box-shadow: 2px 4px 8px var(--shadow-lite);
+}
+
+
+#fieldset-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#avatar-item {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+position: relative;
+
+}
+
+#avatar-item label {
+  text-align: center;
+}
+
+.avatar-upload-wrapper {
+  position: relative;
+  /* display: inline-block; */
+  cursor: pointer;
+}
+#profile-avatar-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid var(--darkblue);
+  object-fit: cover;
+  margin-bottom: 8px;
+  display: block;
+}
+.avatar-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--shadow);
+  color: var(--white-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 2;
+}
+.avatar-upload-wrapper:hover .avatar-overlay,
+.avatar-overlay:focus-within {
+  opacity: 1;
+  pointer-events: all;
+}
+.avatar-overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.avatar-overlay-content button {
+  background: var(--header-normal);
+  color: var(--white-mormal);
+  border: none;
+  border-radius: 6px;
+  padding: 4px;
+  width: 64px;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.95;
+  transition: background 0.2s;
+}
+.avatar-overlay-content button:hover {
+  background: var(--header-accent);
+  color: var(--white-accent);
+}
+
+#wrapped-window-panel-profile .form-item label {
+  max-width: 95px;
+  min-width: 95px;
+}
+
+#wrapped-window-panel-profile {
+  max-width: 450px;
+  width: 85%;
+} 
+
+#profile-form {
+  padding: 0 25px;
+}
+
+.window-button.non-active,
+.window-button-rev.non-active {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 530px) {
+  #profile-form {
+    padding: 0 0;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  #wrapped-window-panel-profile {
+    max-width: 100%;
+    width: 100%;
+    left: 50%;
+    margin: 0;
+    padding: 0;
+    z-index: 0;
+  } 
+}

@@ -19,19 +19,33 @@ class SearchController
   
   public static function searchUsers($query, $limit = 10)
   {
-      $results = User::findByNamePart($query);
-      return self::limitResults($results, $limit);
+    $results = User::findViewByNamePart($query);
+    return self::limitResults($results, $limit);
   }
   
   public static function searchStudents($query, $limit = 10)
   {
-      $results = Student::findByNamePart($query);
-      return self::limitResults($results, $limit);
+    $results = Student::findViewByNamePart($query);
+    return self::limitResults($results, $limit);
   }
   
   public static function searchTeachers($query, $limit = 10)
   {
-      $results = Teacher::findByNamePart($query);
-      return self::limitResults($results, $limit);
+    $results = Teacher::findViewByNamePart($query);
+    return self::limitResults($results, $limit);
   }
+
+  public static function searchAllStudents($limit = 1000)
+  {
+    $results = Student::findViewAll();
+    return self::limitResults($results, $limit);
+  }
+
+  public static function searchAllTeachers($limit = 1000)
+  {
+    $results = Teacher::findViewAll();
+    return self::limitResults($results, $limit);
+  }
+
+
 }

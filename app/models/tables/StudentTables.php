@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . './UserTable.php';
+require_once __DIR__ . './UserTables.php';
 
 class StudentsTableConnect extends UserTableConnect
 {

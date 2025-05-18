@@ -220,6 +220,8 @@
 #icon-profile-avatar {
   width: 38px;
   height: 38px;
+  border-radius: 50%;
+  /* border: 2px solid var(--white-normal); */
 }
 .icon-message-avatar {
   width: 60px;

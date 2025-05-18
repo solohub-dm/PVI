@@ -164,6 +164,10 @@ function isCorrectValue() {
       showInputError(passwordInput, errorText);
       return false;
     }
+    if (passwordInput.value !== confirmPasswordInput.value) {
+      showInputError(confirmPasswordInput, 'Passwords do not match.');
+      return false;
+    }
   }
 
   return true;
@@ -205,9 +209,10 @@ function tryRegister() {
   })
   .then(response => response.json())
   .then(result => {
+    console.log('Registration result:', result);
     if (result.success) {
       console.log('Registration successful:', result);
-      // localStorage.setItem('user', JSON.stringify(result.user));
+      localStorage.setItem('user', JSON.stringify(result.user));
       console.log('User data:', result.user);
       window.location.href = './index.php';
     } else if (result.errors) {
@@ -247,7 +252,7 @@ function tryLogin() {
   .then(response => response.json())
   .then(result => {
     if (result.success) {
-      // localStorage.setItem('user', JSON.stringify(result.user));
+      localStorage.setItem('user', JSON.stringify(result.user));
       window.location.href = './index.php';
     } else if (result.errors) {
       Object.entries(result.errors).forEach(([field, message]) => {
@@ -265,7 +270,7 @@ function tryLogin() {
 
 function fillTestRegisterData() {
   firstNameInput.value = "Test";
-  lastNameInput.value = "User";
+  lastNameInput.value = "Teacher";
   genderInput.value = "Male";
   roleInput.value = "teacher";
   birthdayInput.value = "2003-05-06";
@@ -273,7 +278,7 @@ function fillTestRegisterData() {
   passwordInput.value = "Test123!";
   confirmPasswordInput.value = "Test123!";
   groupInput.value = "АБ-11";
-  // Якщо поле групи приховане, показати його
+
   if (groupField) groupField.style.display = "none";
 }
 
@@ -284,3 +289,22 @@ document.addEventListener('keydown', function (e) {
 });
 
 
+function fillTestRegisterData2() {
+  firstNameInput.value = "Test";
+  lastNameInput.value = "Student";
+  genderInput.value = "Male";
+  roleInput.value = "student";
+  birthdayInput.value = "2003-05-06";
+  emailInput.value = "test.user.pz.2022@lpnu.ua ";
+  passwordInput.value = "Test123!";
+  confirmPasswordInput.value = "Test123!";
+  groupInput.value = "ПЗ-11";
+
+  if (groupField) groupField.style.display = "flex";
+}
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === '-') {
+    fillTestRegisterData2();
+  }
+});

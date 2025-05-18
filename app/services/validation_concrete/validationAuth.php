@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . './validation.php';
+require_once __DIR__ . './../validation.php';
 
 function validateAuthData($data) {
   $errors = [];

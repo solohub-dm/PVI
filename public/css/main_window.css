@@ -64,6 +64,8 @@
 }
 
 
+
+
 #wrapped-window-panel-create-table label {
   min-width: 110px;
   width: 110px;
@@ -279,11 +281,25 @@ fieldset {
 }
 
 
+#window-body-create-table {
+  margin-bottom: 12px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
 
+#window-body-create-table .form-item{
+  padding-left: 0px;
+  padding-right: 0px;
+}
 
 @media screen and (max-width: 650px) {
   .form-item {
     padding: 0px 25px;
+  }
+
+  #window-body-create-table {
+  padding-left: 35px;
+  padding-right: 35px;
   }
 
   #wrapped-window-panel-redact {
@@ -337,4 +353,11 @@ fieldset {
   }
 }
 
+#window-body-confirm {
+  padding-bottom: 24px;
+}
+#window-body-confirm p {
+  font-size: 14px;
+  /* font-weight: normal; */
+}
 

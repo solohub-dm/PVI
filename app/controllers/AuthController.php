@@ -3,7 +3,7 @@ require_once __DIR__ . '/../models/users/User.php';
 require_once __DIR__ . '/../models/users/Student.php';
 require_once __DIR__ . '/../models/users/Teacher.php';
 require_once __DIR__ . '/../core/Session.php';
-require_once __DIR__ . '/../services/validationAuth.php';
+require_once __DIR__ . '/../services/validation_concrete/validationAuth.php';
 
 class AuthController
 {
@@ -31,16 +31,18 @@ class AuthController
         $user->role = $userClass::ROLE;
         User::setRememberToken($user);
 
+        $user::setStatus($user->id, 1); 
+
         $userData = [
           'id' => $user->id,
           'email' => $user->email,
           'first_name' => $user->first_name,
           'last_name' => $user->last_name,
           'url_avatar' => $user->url_avatar,
-          'role' => $user->role
+          'role' => $user->role,
+          'birthday' => $user->birthday,
+          'gender' => $user->gender 
         ];
-
-        $user::setStatus($user->id, 1); 
 
         Session::set('user', $userData);
 
@@ -58,9 +60,7 @@ class AuthController
     session_start(); 
     $user = Session::get('user'); 
 
-    if ($user) {
-      // $class = get_class($user);
-      // $class::setStatus($user->id, 0);  
+    if ($user) { 
       if (isset($user['role']) && isset($user['id'])) {
         $class = $user['role'] === 'student' ? Student::class : Teacher::class;
         $class::setStatus($user['id'], 0);
@@ -78,6 +78,14 @@ class AuthController
   public static function checkAuth()
 {
     $user = Session::get('user');
+    $currentScript = basename($_SERVER['SCRIPT_NAME']);
+
+
+    if ($user && $currentScript === 'auth.php') {
+        header('Location: /website/public/index.php');
+        exit;
+    }
+
     if (!$user) {
         if (
             isset($_COOKIE['remember_token'], $_COOKIE['remember_user_type'], $_COOKIE['remember_user_id'])
@@ -102,26 +110,38 @@ class AuthController
                     $user = Teacher::findById($row['user_id']);
                 }
                 if ($user) {
-                    $userData = [
-                        'id' => $user->id,
-                        'email' => $user->email,
-                        'first_name' => $user->first_name,
-                        'last_name' => $user->last_name,
-                        'url_avatar' => $user->url_avatar,
-                        'role' => $user_type
-                    ];
-                    Session::set('user', $userData);
+                  $userData = [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'url_avatar' => $user->url_avatar,
+                    'role' => $user_type
+                  ];
+
+                  Session::set('user', $userData);
+                  if (Session::get('user') && $currentScript === 'auth.php') {
+                      header('Location: /website/public/index.php');
+                      exit;
+                  }
                 } else {
-                  header('Location: /website/public/auth.php');
+                  if ($currentScript !== 'auth.php') {
+                    header('Location: /website/public/auth.php');
                     exit;
+                  }
                 }
             } else {
-              header('Location: /website/public/auth.php');
+              if ($currentScript !== 'auth.php') {
+                header('Location: /website/public/auth.php');
                 exit;
+              }
             }
         } else {
-          header('Location: /website/public/auth.php');
+          if ($currentScript !== 'auth.php') {
+            header('Location: /website/public/auth.php');
             exit;
+          }
+ 
         }
     }
 }

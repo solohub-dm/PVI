@@ -204,6 +204,20 @@ input:focus {
   cursor: default;
 }
 
+.dropdown-list li span,
+.dropdown-list li {
+  display: flex;
+  align-items: center;      
+  justify-content: flex-start; 
+
+  min-height: 28px;  
+  white-space: normal;     
+}
+
+.dropdown-list li span {
+  gap: 8px;
+}
+
 .selected-empty-text {
   font-family: var(--font-informative);
   color: var(--darkblue);
@@ -220,6 +234,7 @@ input:focus {
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 28px;
+  max-height: 120px;
   scrollbar-width: thin;
   scrollbar-color: var(--darkblue) var(--white-normal);
 }
@@ -250,6 +265,14 @@ input:focus {
   display: flex;
   align-items: center;
   font-family: var(--font-informative);
+}
+
+.selected-item span {
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  word-break: break-word; */
 }
 
 .selected-item .remove-item {

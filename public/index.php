@@ -74,7 +74,7 @@ require_once __DIR__ . '/api/auth_check.php';
                 />
               </div>
               <hr class="line-horizontal" />
-              <div class="window-body">
+              <div class="window-body" id="window-body-create-table">
                 <form id="form-create-table">
                   <fieldset id="fieldset-create-table">
 
@@ -83,6 +83,10 @@ require_once __DIR__ . '/api/auth_check.php';
                     <div class="form-item">
                       <label for="table-name">Name</label>
                       <input type="text" id="table-name" name="table-name" autocomplete="off" />
+                      <div class="error-message" id="error-table-name" style="display:none">
+                        <button type="button" class="error-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                        <span class="error-text-content"></span>
+                      </div>
                     </div>
                     
                     <div class="form-item">
@@ -121,9 +125,7 @@ require_once __DIR__ . '/api/auth_check.php';
 
                   </fieldset>
                 </form>
-                <div class="error-panel">
-                  <p class="error-text" id="error-text-create-table"></p>
-                </div>
+            
               </div>
               <hr class="line-horizontal" />
               <div class="window-control-panel">
@@ -161,7 +163,7 @@ require_once __DIR__ . '/api/auth_check.php';
           <table>
             <thead>
               <tr>
-                <th>
+                <th id="th-checkbox">
                   <input
                     type="checkbox"
                     id="checkbox-table-head"
@@ -174,7 +176,7 @@ require_once __DIR__ . '/api/auth_check.php';
                 <th>Gender</th>
                 <th>Birthday</th>
                 <th>Online</th>
-                <th>Options</th>
+                <th id="th-options">Options</th>
               </tr>
             </thead>
             <tbody id="table-body"></tbody>
@@ -326,7 +328,7 @@ require_once __DIR__ . '/api/auth_check.php';
         <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-confirm">
           <div class="wrapped-window-panel" id="wrapped-window-panel-confirm">
             <div class="window-panel" id="window-panel-confirm">
-              <h3 class="sss">Confirm</h3>
+              <h3 class="text-window-title">Confirm</h3>
               <img
                 src="./img/icon/close_dir.png"
                 alt="close window"
@@ -335,7 +337,7 @@ require_once __DIR__ . '/api/auth_check.php';
               />
             </div>
             <hr class="line-horizontal" />
-            <div class="window-body">
+            <div class="window-body" id="window-body-confirm">
               <p class="text-confirm-window" id="text-confirm-window">Sure?</p>
             </div>
             <hr class="line-horizontal" />

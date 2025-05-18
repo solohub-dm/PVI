@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . './validation.php';
+require_once __DIR__ . './../validation.php';
 
 function validateRegistrationData($data, $id_group = null) {
   $errors = [];
@@ -38,7 +38,7 @@ function validateRegistrationData($data, $id_group = null) {
   }
 
   if ($errors) return $errors;
-
+  
   if (isEmpty($data['password'] ?? '')) {
     $errors['password'] = 'Password is required.';
   } elseif (!isValidPassword($data['password'])) {

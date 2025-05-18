@@ -97,21 +97,24 @@ abstract class User extends Model
 
     return [implode(' AND ', $where), $params];
   }
-
-  // Пошук по частині імені в конкретній таблиці
-  public static function findByNamePart($part)
+  
+  public static function findViewByNamePart($part)
   {
-      [$sqlWhere, $sqlParams] = static::getFindByNamePartSql($part);
-      return static::findManyBy('*', $sqlWhere, $sqlParams);
+    [$sqlWhere, $sqlParams] = static::getFindByNamePartSql($part);
+    $fields = 'id, email, first_name, last_name, url_avatar';
+    return static::findManyBy($fields, $sqlWhere, $sqlParams);
   }
 
-  // Пошук по email у конкретній таблиці
+  public static function findViewAll() {
+    $fields = 'id, email, first_name, last_name, url_avatar';
+    return static::findManyBy($fields, 1, []);
+  }
+
   public static function findByEmail($email)
   {
     return static::findOneBy('*', 'email = ?', [$email]);
   }
 
-  // Оновлення статусу
   public static function setStatus($id, $status)
   {
     $db = Database::connect();
@@ -120,86 +123,13 @@ abstract class User extends Model
     return $stmt->rowCount() > 0;
   }
 
-  protected static function updateAvatar($id, $avatarPath)
-{
-    $db = Database::connect();
-    $stmt = $db->prepare("UPDATE `" . static::TABLE . "` SET url_avatar = ? WHERE id = ?");
-    $stmt->execute([$avatarPath, $id]);
-    return $stmt->rowCount() > 0;
-}
-
-protected static function generateAvatarFileName($id, $ext = 'png')
-{
-    $hash = md5('avatar_' . $id);
-    return "avatar_{$hash}.{$ext}";
-}
-
-protected static function deleteAvatarFile($url)
-{
-    if (!empty($url)) {
-        $oldPath = dirname(__DIR__, 2) . '/' . $url;
-        if (is_file($oldPath)) {
-            unlink($oldPath);
-        }
-    }
-}
-
-public static function addGeneratedAvatar($user)
-{
-    $id = $user->id;
-    $url_avatar = $user->url_avatar;
-
-    $avatarFileName = static::generateAvatarFileName($id, 'png');
-    $avatarPath = dirname(__DIR__, 2) . '../../uploads/avatars/' . $avatarFileName;
-
-    static::deleteAvatarFile($url_avatar);
-
-    $dir = dirname($avatarPath);
-    if (!is_dir($dir)) {
-        mkdir($dir, 0777, true);
-    }
-
-    generateAvatar($avatarPath, $id);
-
-    static::updateAvatar($id, '../../uploads/avatars/' . $avatarFileName);
-    $user->url_avatar = '../../uploads/avatars/' . $avatarFileName;
-
-    return '../../uploads/avatars/' . $avatarFileName;
-}
-
-public static function uploadAvatar($id, $url_avatar, $file)
-{
-    $targetDir = dirname(__DIR__, 2) . '../..//uploads/avatars/';
-    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg', 'jpeg', 'png'];
-    if (!in_array($ext, $allowed)) {
-        return ['error' => 'Invalid file type'];
-    }
-
-    $avatarFileName = static::generateAvatarFileName($id, $ext);
-    $avatarPath = $targetDir . $avatarFileName;
-
-    static::deleteAvatarFile($url_avatar);
-
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
-    }
-
-    $img = null;
-    if ($ext === 'jpg' || $ext === 'jpeg') $img = imagecreatefromjpeg($file['tmp_name']);
-    if ($ext === 'png') $img = imagecreatefrompng($file['tmp_name']);
-    if (!$img) return ['error' => 'Cannot process image'];
-
-    $resized = imagecreatetruecolor(128, 128);
-    imagecopyresampled($resized, $img, 0, 0, 0, 0, 128, 128, imagesx($img), imagesy($img));
-    imagepng($resized, $avatarPath);
-    imagedestroy($img);
-    imagedestroy($resized);
-
-    static::updateAvatar($id, '../../uploads/avatars/' . $avatarFileName);
-
-    return '../../uploads/avatars/' . $avatarFileName;
-}
+  public static function updateAvatar($id, $avatarPath)
+  {
+      $db = Database::connect();
+      $stmt = $db->prepare("UPDATE `" . static::TABLE . "` SET url_avatar = ? WHERE id = ?");
+      $stmt->execute([$avatarPath, $id]);
+      return $stmt->rowCount() > 0;
+  }
 
 public static function updateUserDataFields($id, $fields)
   {

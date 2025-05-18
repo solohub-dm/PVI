@@ -10,14 +10,6 @@ const confirmConfirmWindowButton = getElement("#button-confirm-confirm");
 const textConfirmWindow = getElement("#text-confirm-window");
 const closeWindowIconCnf = getElement("#icon-close-window-confirm");
 
-// const windowShadowPanelRedact = getElement("#wrapped-shadow-panel-redact");
-// const confirmTableText = getElement("#text-confirm");
-// const confirmTableButton = getElement("#button-confirm");
-// const cancelTableButton = getElement("#button-cancel");
-// const saveTableButton = getElement("#button-save");
-// const createTableButton = getElement("#button-create");
-// const closeWindowIconRdc = getElement("#icon-close-window-redact");
-
 const windowShadowPanelInfo = getElement("#wrapped-shadow-panel-info");
 const closeWindowIconInfo = getElement("#icon-close-window-info");
 const group_name_span = getElement("#group-span");
@@ -27,20 +19,7 @@ const gender_span = getElement("#gender-span");
 const birth_date_span = getElement("#birthday-date-span");
 
 const deleteTableIcon = getElement("#icon-delete-table");
-// const addTableIcon = getElement("#icon-add-row");
 
-// const errorText = getElement("#error-text");
-// const form_input = getElement("#form-student");
-// const group_name_input = getElement("#select-group");
-// const first_name_input = getElement("#first-name");
-// const last_name_input = getElement("#last-name");
-// const gender_input = getElement("#select-gender");
-// const birth_date_input = getElement("#birthday-date");
-
-const usernameText = getElement("#profile-username");
-const avatarIcon = getElement("#icon-profile-avatar");
-
-// let isAddMode = false;
 let isCnfMode = false;
 
 const observer = new MutationObserver(() => {
@@ -54,159 +33,6 @@ const observer = new MutationObserver(() => {
 observer.observe(document.body, { childList: true, subtree: true });
 
 let bodyCbxItems;
-
-// function closeLoginWindow() {
-//   windowShadowPanelLogin.style.display = "none";
-//   formLogin.reset();
-//   errorTextLogin.textContent = "";
-//   [
-//     firstNameInputLogin,
-//     lastNameInputLogin,
-//     userPasswordLogin
-//   ].forEach((input) => {
-//     input.style.backgroundColor = "#ffffff";
-//   }) ;
-// }
-
-// async function checkValidFormLogin() {
-//   const firstName = firstNameInputLogin.value;
-//   const lastName = lastNameInputLogin.value;
-//   const password = userPasswordLogin.value;
-
-//   try {
-//     const response = await fetch('php/validation_login.php', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       },
-//       body: `first-name=${encodeURIComponent(firstName)}&last-name=${encodeURIComponent(lastName)}&password=${encodeURIComponent(password)}`
-//     });
-
-//     const data = await response.json();
-
-//     if (data.errors) {
-//       errorTextLogin.textContent = Object.values(data.errors).join(" ");
-
-//       if (data.fields) {
-//         for (const [field, valid] of Object.entries(data.fields)) {
-//           const input = document.querySelector(`[name="${field}"]`);
-//           if (input) {
-//             input.style.backgroundColor = valid ? "#ffffff" : colorError;
-//           }
-//         }
-//       }
-
-//       return null;
-//     }
-
-//     if (data.valid && data.id) {
-//       return data.id;
-//     } else {
-//       errorTextLogin.textContent = "User not found or incorrect data.";
-//       return null;
-//     }
-//   } catch (error) {
-//     console.error("Login validation error:", error);
-//     errorTextLogin.textContent = "Server error: " + error.message;
-
-//     return null;
-//   }
-// }
-
-// const colorError = "#f17e7e";
-
-// function checkCorrectValueLogin() {
-//   let isValid = false;
- 
-//   errorTextLogin.textContent = "";
-//   [
-//     firstNameInputLogin,
-//     lastNameInputLogin,
-//     userPasswordLogin
-//   ].forEach((input) => {
-//     input.style.backgroundColor = "#ffffff";
-//   });
-
-//   do {
-//     let firstName = firstNameInputLogin.value;
-//     if (firstName.trim() !== "" && !isValidName(firstName, errorTextLogin)) {
-//       firstNameInputLogin.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     let lastName = lastNameInputLogin.value;
-//     if (lastName.trim() !== "" && !isValidName(lastName, errorTextLogin)) {
-//       lastNameInputLogin.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     let password = userPasswordLogin.value;
-//     if (password.trim() !== "" && password.length < 2) {
-//       errorTextLogin.textContent = "Password must be longer than one symbols.";
-//       userPasswordLogin.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     isValid = true;
-//   } while (0);
-
-//   return isValid;
-// }
-
-// function checkFormEmptyLogin() {
-//   let isValid = false;
-
-//   do {
-//     if (firstNameInputLogin.value.trim() === "") {
-//       errorTextLogin.textContent = "Enter first name first."
-//       firstNameInputLogin.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     if (lastNameInputLogin.value.trim() === "") {
-//       errorTextLogin.textContent = "Enter last name first."
-//       lastNameInputLogin.style.backgroundColor = colorError;
-//       break;
-//     }
-    
-//     isValid = true;
-//   } while (false);
-
-//   return isValid;
-// }
-
-// function openLoginWindow() {
-//   windowShadowPanelLogin.style.display = "flex";
-// }
-
-// async function tryLogin() { 
-//   if (!checkCorrectValueLogin() || !checkFormEmptyLogin()) return;
-
-//   const id = await checkValidFormLogin();
-//   if (!id) return;
-
-//   const userInfo = {
-//     firstName: firstNameInputLogin.value,
-//     lastName: lastNameInputLogin.value,
-//     password: userPasswordLogin.value,
-//     role: lastNameInputLogin.value == "Admin" ? "Teacher" : "Student",
-//     id: id
-//   }
-
-//   closeLoginWindow();
-// }
-
-// function loginTeacherRole() {
-
-// }
-
-// function loginStudentRole() {
-  
-// }
-
-// function loginOut() {
-  
-// }
 
 closeWindowIconInfo.addEventListener("click", closeInfo);
 function closeInfo() {
@@ -269,9 +95,12 @@ function bodyCbxChange(event) {
 }
 
 function lockOptions(checkbox) {
+  if (!checkbox) return;
   const row = checkbox.closest("tr");
   const cell = row.cells[6];
   const div = cell.firstElementChild;
+
+  if (!div) return;
 
   if (checkbox.checked) {
     div.querySelectorAll("*").forEach((child) => {
@@ -317,24 +146,27 @@ function openConfirmWindowOne(event) {
   textConfirmWindow.textContent =
     "Are you sure to delete row with " + name + "`s data?";
 
-  confirmConfirmWindowButton.onclick = () => deleteIconClick(row);
+  confirmConfirmWindowButton.onclick = async () => {
+    const studentId = row.dataset.studentId;
+    await deleteStudent(studentId);
+    removeStudentRow(studentId);
+
+    if (studentRowPool[studentId]) {
+      studentRowPool[studentId].remove();
+      delete studentRowPool[studentId];
+    }
+
+    bodyCbxItems = document.querySelectorAll(".table-body-checkbox");
+    const anyChecked = Array.from(bodyCbxItems).some(
+      (checkbox) => checkbox.checked
+    );
+    headCbxItem.checked = anyChecked;
+    if (!anyChecked) offDelete();
+
+    closeConfirmWindow();
+  };
 
   windowShadowPanelConfirm.style.display = "block";
-}
-
-function deleteIconClick(row) {
-  const studentId = row.dataset.studentId;
-  deleteStudent(studentId);
-
-  row.remove();
-
-  const anyChecked = Array.from(bodyCbxItems).some(
-    (checkbox) => checkbox.checked
-  );
-  headCbxItem.checked = anyChecked;
-  if (!anyChecked) offDelete();
-
-  closeConfirmWindow();
 }
 
 deleteTableIcon.addEventListener("click", openConfirmWindowAll);
@@ -342,23 +174,56 @@ function openConfirmWindowAll() {
   windowShadowPanelConfirm.style.display = "block";
   textConfirmWindow.textContent =
     "Are you sure to delete all unlocked rows in the table?";
-  confirmConfirmWindowButton.onclick = deleteUnlockRow;
+  confirmConfirmWindowButton.onclick = async function () {
+
+    const idsToDelete = [];
+
+    const rows = tableBody.querySelectorAll("tr");
+    rows.forEach((row) => {
+      let cbx = row.cells[0].firstElementChild;
+      if (cbx.checked) {
+        idsToDelete.push(row.dataset.studentId);
+      }
+    });
+
+    if (idsToDelete.length > 0) {
+      await fetch("/website/public/api/table.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `action=removeStudents&tableId=${encodeURIComponent(tableId)}&studentIds[]=${idsToDelete.map(encodeURIComponent).join('&studentIds[]=')}`
+      });
+    }
+
+    idsToDelete.forEach(studentId => {
+      if (studentRowPool[studentId]) {
+        studentRowPool[studentId].remove();
+        delete studentRowPool[studentId];
+      }
+      removeStudentRow(studentId);
+    });
+
+    headCbxItem.checked = false;
+    offDelete();
+    closeConfirmWindow();
+  };
 }
 
 async function deleteStudent(studentId) {
   try {
-    const response = await fetch("php/del_student.php", {
+    const response = await fetch("/website/public/api/table.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `id=${encodeURIComponent(studentId)}`
+      body: `action=removeStudents&tableId=${encodeURIComponent(tableId)}&studentIds[]=${encodeURIComponent(studentId)}`
     });
 
     const result = await response.json();
 
     if (result.success) {
-      console.log("Student deleted successfully");
+      console.log("Student deleted from table successfully");
 
       const index = students.findIndex(
         student => student.id === studentId
@@ -368,7 +233,7 @@ async function deleteStudent(studentId) {
       }
 
     } else {
-      console.error("Failed to delete student:", result.error);
+      console.error("Failed to delete student from table:", result.error);
       errorText.textContent = `Error: ${result.error}`;
     }
   } catch (err) {
@@ -377,375 +242,14 @@ async function deleteStudent(studentId) {
   }
 }
 
-function deleteUnlockRow() {
-  if (headCbxItem.checked) {
-    const rows = tableBody.querySelectorAll("tr");
+let currentPage = 0;
+let tableId = null;
+let lastLoadedCount = 0;
 
-    rows.forEach((row) => {
-      let cbx = row.cells[0].firstElementChild;
-      if (cbx.checked) {
+const prevPageBtn = document.getElementById("pagination-prev");
+const nextPageBtn = document.getElementById("pagination-next");
 
-        // const cbxIndex = bodyCbxItems.findIndex((checkbox) => checkbox == cbx);
-        // if (cbxIndex !== -1) {
-        //   bodyCbxItems.splice(cbxIndex, 1);
-        // }
-        const studentId = row.dataset.studentId;
-        deleteStudent(studentId)
-
-        row.remove();
-      }
-    });
-    headCbxItem.checked = false;
-  }
-  closeConfirmWindow();
-}
-
-// addTableIcon.addEventListener("click", () => { openWindow(true)});
-// closeWindowIconRdc.addEventListener("click", closeWindow);
-
-// function isFormEmpty() {
-//   return (
-//     group_name_input.value == "selected" &&
-//     first_name_input.value == "" &&
-//     last_name_input.value == "" &&
-//     gender_input.value == "selected" &&
-//     birth_date_input.value == ""
-//   );
-// }
-
-// function isFormChanged() {
-//   return !(
-//     group_name_input.value === student.group_name &&
-//     first_name_input.value === student.full_name.split(" ")[0] &&
-//     last_name_input.value === student.full_name.split(" ")[1] &&
-//     gender_input.value === student.gender &&
-//     birth_date_input.value === student.birth_date
-//   );
-// }
-
-// cancelTableButton.addEventListener("click", confirmAction);
-// function confirmAction() {
-//   let is;
-//   let ms;
-//   if (!isAddMode) {
-//     is = isFormChanged();
-//   } else {
-//     ms = isFormEmpty();
-//   }
-
-//   if ((isAddMode && !ms) || isCnfMode || is) {
-//     displayButtons();
-//     isCnfMode = !isCnfMode;
-//   } else {
-//     closeWindow();
-//   }
-// }
-
-// confirmTableButton.addEventListener("click", confirmedCancel);
-// function confirmedCancel() {
-//   closeWindow();
-// }
-
-// function displayButtons() {
-//   let displayDir = isCnfMode ? "block" : "none";
-//   let displayRev = isCnfMode ? "none" : "block";
-//   let hidden = isCnfMode ? 0 : 1;
-
-//   if (isAddMode) createTableButton.style.display = displayDir;
-//   else saveTableButton.style.display = displayDir;
-
-//   confirmTableButton.style.display = displayRev;
-//   confirmTableText.style.opacity = hidden;
-//   confirmTableText.style.cursor = isCnfMode ? "default" : "auto";
-// }
-
-// function openWindow(isOpenInAddMode) {
-//   isAddMode = isOpenInAddMode;
-//   if (isOpenInAddMode)
-//     birth_date_input.value = "2000-01-01";
-//   displayWindow(true);
-// }
-// function closeWindow() {
-//   displayWindow(false);
-//   isAddMode = false;
-//   confirmTableButton.style.display = "none";
-//   confirmTableText.style.opacity = 0;
-//   isCnfMode = false;
-//   form_input.reset();
-// }
-
-// function displayWindow(isDisplayed) {
-//   let display = isDisplayed ? "block" : "none";
-//   errorText.textContent = "";
-//   [
-//     group_name_input,
-//     first_name_input,
-//     last_name_input,
-//     gender_input,
-//     birth_date_input
-//   ].forEach((input) => {
-//     input.style.backgroundColor = "#ffffff";
-//   }) ;
-
-//   if (isAddMode) {
-//     addTableText.style.display = display;
-//     createTableButton.style.display = display;
-//   } else {
-//     editTableText.style.display = display;
-//     saveTableButton.style.display = display;
-//   }
-//   windowShadowPanelRedact.style.display = display;
-// }
-
-// first_name_input.addEventListener("input", checkCorrectValue);
-// last_name_input.addEventListener("input", checkCorrectValue);
-// birth_date_input.addEventListener("input", checkCorrectValue);
-// group_name_input.addEventListener("focus", checkCorrectValue);
-// gender_input.addEventListener("focus", checkCorrectValue);
-
-// async function checkFormValid() {
-//   if (!checkCorrectValue() || !checkFormEmpty()) {
-//     console.log("checkFormValid: false");
-//     return false;
-//   }
-
-//   const fields = [
-//     { name: "first-name", value: first_name_input.value },
-//     { name: "last-name", value: last_name_input.value },
-//     { name: "birthday", value: birth_date_input.value },
-//     { name: "group", value: group_name_input.value },
-//     { name: "gender", value: gender_input.value }
-//   ];
-
-//   for (const { name, value } of fields) {
-//     const hasError = await validateFieldServer(name, value);
-//     if (hasError) {
-//       console.log("checkFormValid: false");
-//       return false;
-//     }
-//   }
-
-//   console.log("checkFormValid: true");
-//   return true;
-// }
-
-// function checkCorrectValue() {
-//   let isValid = false;
- 
-//   errorText.textContent = "";
-//   [
-//     group_name_input,
-//     first_name_input,
-//     last_name_input,
-//     gender_input,
-//     birth_date_input
-//   ].forEach((input) => {
-//     input.style.backgroundColor = "#ffffff";
-//   }) ;
-
-//   do {
-//     let firstName = first_name_input.value;
-//     if (firstName.trim() !== "" && !isValidName(firstName)) {
-//       first_name_input.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     let lastName = last_name_input.value;
-//     if (lastName.trim() !== "" && !isValidName(lastName)) {
-//       last_name_input.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     let date = birth_date_input.value;
-//     if (date.trim() !== "" && !isValidDate(date)) {
-//       birth_date_input.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     isValid = true;
-//   } while (0);
-
-//   return isValid;
-// }
-
-
-// function checkFormEmpty() {
-//   let isValid = false;
-
-//   do {
-//     if (group_name_input.value === "selected") {
-//       errorText.textContent = "Enter group name first."
-//       group_name_input.style.backgroundColor = colorError;
-//       break;
-//     } 
-
-//     if (first_name_input.value.trim() === "") {
-//       errorText.textContent = "Enter first name first."
-//       first_name_input.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     if (last_name_input.value.trim() === "") {
-//       errorText.textContent = "Enter last name first."
-//       last_name_input.style.backgroundColor = colorError;
-//       break;
-//     }
-
-//     if (gender_input.value === "selected") {
-//       errorText.textContent = "Enter group name first."
-//       gender_input.style.backgroundColor = colorError;
-//       break;
-//     } 
-
-//     if (birth_date_input.value === "") {
-//       errorText.textContent = "Enter date first."
-//       birth_date_input.style.backgroundColor = colorError;
-//       break;
-//     }
-    
-//     isValid = true;
-//   } while (false);
-
-//   return isValid;
-// }
-
-// async function validateFieldServer(field, value) {
-//   const controller = new AbortController();
-//   const timeout = setTimeout(() => controller.abort(), 3000);
-
-//   try {
-//     const response = await fetch('php/validation.php', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       },
-//       body: `field=${encodeURIComponent(field)}&value=${encodeURIComponent(value)}`,
-//       signal: controller.signal
-//     });
-
-//     clearTimeout(timeout);
-
-//     if (!response.ok) {
-//       console.error(`Server returned error: ${response.status}`);
-//       if (typeof errorText !== "undefined") {
-//         errorText.textContent = `Server returned error: ${response.status}`;
-//       }
-//       return 1;
-//     }
-
-//     const data = await response.json();
-
-//     const input = document.querySelector(`[name="${field}"]`);
-//     if (!input) {
-//       console.warn(`Input element not found for field: ${field}`);
-//     }
-
-//     if (!data.valid) {
-//       if (input) input.style.backgroundColor = colorError;
-
-//       if (data.errors && data.errors[field]) {
-//         if (typeof errorText !== "undefined") {
-//           errorText.textContent = "Server validation error: " + data.errors[field];
-//         }
-//         console.warn(`Validation failed: ${data.errors[field]}`); 
-//       } else {
-//         if (typeof errorText !== "undefined") {
-//           errorText.textContent = "Unknown validation error.";
-//         }
-//         console.warn("Validation failed: Unknown reason."); 
-//       }
-
-//       return 1;
-//     } else {
-//       if (input) input.style.backgroundColor = "#ffffff";
-//       return 0;
-//     }
-
-//   } catch (error) {
-//     if (error.name === 'AbortError') {
-//       console.error("Server response timeout"); 
-//       if (typeof errorText !== "undefined") {
-//         errorText.textContent = "Server took too long to respond. Please try again later.";
-//       }
-//     } else {
-//       console.error("Fetch error:", error);
-//       if (typeof errorText !== "undefined") {
-//         errorText.textContent = "Network or server error occurred: " + error.message;
-//       }
-//     }
-//     return 1;
-//   }
-// }
-
-
-// createTableButton.addEventListener("click", tryAddRow);
-
-// async function tryAddRow() {
-//   console.log("tryAddRow");
-//   const isValid = await checkFormValid();
-
-//   if (!isValid) {
-//     console.log("Form is not valid.");
-//     return;
-//   }
-
-//   const studentData = {
-//     first_name: first_name_input.value,
-//     last_name: last_name_input.value,
-//     birthday: birth_date_input.value,
-//     group: group_name_input.value,
-//     gender: gender_input.value
-//   };
-
-//   try {
-//     // const response = await fetch("php/add_student.php", {
-//     //   method: "POST",
-//     //   headers: {
-//     //     "Content-Type": "application/x-www-form-urlencoded"
-//     //   },
-//     //   body: new URLSearchParams(studentData)
-//     // });
-
-//     const result = await response.json();
-
-//     if (result.success) {
-//       console.log("Student added successfully");
-
-//       // outAllStudents();
-//       closeWindow();
-
-//       if (result.password) {
-//         alert("Student added. Temporary password: " + result.password);
-//       }
-
-//     } else {
-//       console.error("Server error:", result.errors);
-//       errorText.textContent = Object.values(result.errors).join(" ");
-//     }
-//   } catch (error) {
-//     console.error("Network/server error:", error);
-//     errorText.textContent = "Could not connect to server.";
-//   }
-// }
-
-// function outAllStudents() {
-
-//   tableBody.innerHTML = "";
-
-//   console.log("outAllStudents");
-  
-//   const loadedStudents = loadStudents();
-
-//   loadedStudents.then((students) => {
-
-//     students.forEach(student => {
-
-//       addRow(student);
-//     });
-//   }).catch(err => {
-//     console.error("Error processing students:", err);
-//   });
-// }
+const paginationCurrent = document.getElementById("pagination-current");
 
 const visibilityChangeEvent = document.hidden ? "visibilitychange" : "webkitvisibilitychange";
 
@@ -755,175 +259,379 @@ document.addEventListener(visibilityChangeEvent, function() {
   } else {
     console.log("The tab is active.");
     if (window.location.pathname.includes("index.php")) {
-      // outAllStudents();
+
     }
   }
 });
-
-// async function loadStudents() {
-
-//   console.log("loadStudents");
-//   try {
-//     const response = await fetch("php/get_students.php");
-//     const result = await response.json();
-
-//     if (!result.success) {
-//       console.error("Error loading students:", result.error);
-//       return [];
-//     }
-
-//     students = [];
-//     if (Array.isArray(result.students)) {
-
-//       result.students.forEach(studentData => {
-//         const studentId = Number(studentData.Id);
-        
-//         const new_student = new Student(
-//           studentData.GroupName,
-//           studentData.FirstName + " " + studentData.LastName,
-//           studentData.FirstName,
-//           studentData.LastName,
-//           studentData.Gender,
-//           studentData.Birthday,
-//           studentData.Status,
-//           studentId
-//         );
-
-//         new_student.id = studentId;
-//         students.push(new_student);
-//       });
-
-//     } else {
-//       console.error("No students array found in the response.");
-//       return [];
-//     }
-
-//     return students;
-
-//   } catch (err) {
-//     console.error("Fetch error:", err);
-//     return []; 
-//   }
-// }
-
-// saveTableButton.addEventListener("click", saveForm);
-// function saveForm() {
-//   if (checkFormValid()) {
-//     student.group_name = group_name_input.value;
-//     student.full_name = first_name_input.value + " " + last_name_input.value;
-//     student.first_name = first_name_input.value;
-//     student.last_name = last_name_input.value;
-//     student.gender = gender_input.value;
-//     student.birth_date = birth_date_input.value;
-
-//     editRow(student);
-//     closeWindow();
-//     student = null;
-//   }
-// }
 
 function createElem(tag) {
   return document.createElement(`${tag}`);
 }
 
-function addRow(student) {
+function createEmptyRow() {
+  console.log("createEmptyRow");
+  const isTeacher = (role === "teacher");
+  console.log("isTeacher: ", isTeacher)
+  const row = createElem("tr");
+  const editable = canEditTable();
 
-  const new_row = createElem("tr");
-  let container = createElem("div");
-  let img_edit = createElem("img");
-  let img_del = createElem("img");
-  let img_stat = createElem("img");
   let checkbox = createElem("input");
-
-  new_row.dataset.studentId = student.id;
-  new_row.onclick = openInfo;
-
   checkbox.type = "checkbox";
-  checkbox.checked = headCbxItem.checked;
   checkbox.className = "table-body-checkbox";
   checkbox.name = "lock";
-  const cbxId = "checkbox-" + student.id;
-  checkbox.id = cbxId;
   checkbox.onchange = bodyCbxChange;
 
   let label = createElem("label");
   label.className = "label-hidden";
-  label.htmlFor = cbxId;
   label.textContent = "Lock / unlock row";
-  
+
+  let img_stat = createElem("img");
   img_stat.className = "icon-status";
   img_stat.alt = "status";
 
+  let container = createElem("div");
+
+  let img_del = null;
+  if (isTeacher) {
+    img_del = createElem("img");
+    img_del.src = "./img/icon/delete.png";
+    img_del.alt = "delete row";
+    img_del.className = "icon-delete-row";
+
+    img_del.onclick = openConfirmWindowOne;
+    container.append(img_del);
+  }
+
+  for (let i = 0; i < 7; i++) row.append(createElem("td"));
+
+  if (isTeacher) {
+    row.children[0].append(checkbox);
+    row.children[0].append(label);
+    row.children[6].append(container);
+  }
+  row.children[5].append(img_stat);
+
+  console.log("row: ", row)
+  return row;
+}
+
+
+function initRowsPool(size) {
+  tableBody.innerHTML = "";
+  freeRowsPool = [];
+  studentRowPool = {};
+  for (let i = 0; i < size; i++) {
+    const row = createEmptyRow();
+    freeRowsPool.push(row);
+  }
+}
+
+function addRowToPool(row, student) {
+  console.log("addRowToPool");
+  console.log("row: ", row);
+
+  for (let i = 1; i <= 4; i++) row.children[i].textContent = "";
+  row.children[5].innerHTML = "";
+
+  row.dataset.studentId = student.id;
+  row.onclick = openInfo;
+
+  let checkbox = row.children[0].querySelector("input[type=checkbox]");
+  let label = row.children[0].querySelector("label");
+  if (checkbox && label) {
+    const cbxId = "checkbox-" + student.id;
+    checkbox.id = cbxId;
+    checkbox.checked = headCbxItem.checked;
+    label.htmlFor = cbxId;
+  }
+
+  let img_stat = createElem("img");
+  img_stat.className = "icon-status";
+  img_stat.alt = "status";
+  if (student.status === "1") student.status = true;
+  if (student.status === "0") student.status = false;
   if (student.status === true) {
     img_stat.src = "./img/icon/status_on.png";
     img_stat.title = "Status: Active";
   } else {
     img_stat.src = "./img/icon/menu_opt.png";
     img_stat.title = "Status: Inactive";
-  } 
+  }
+  row.children[5].append(img_stat);
 
-  container.className = "table-button-panel";
-  container.setAttribute(
-    "title",
-    "Functions are not available.\nUnlock row to interact."
-  );
-  img_edit.src = "./img/icon/edit.png";
-  img_del.src = "./img/icon/delete.png";
-  img_edit.alt = "edit row";
-  img_del.alt = "delete row";
-  img_edit.id = "icon-edit-row";
-  img_del.id = "icon-delete-row";
+  if (canEditTable()) {
+    console.log("canEditTable() {");
+    let img_del = row.children[6].querySelector(".icon-delete-row");
+    if (img_del) {
+      img_del.dataset.studentId = student.id;
+    }
+  }
 
-  container.append(img_edit, img_del);
-  // img_edit.dataset.studentId = student.id;
-  img_del.dataset.studentId = student.id;
-  img_del.onclick = openConfirmWindowOne;
-  // img_edit.onclick = editIconClick;
 
-  for (let i = 0; i < 7; i++) new_row.append(createElem("td"));
-
-  new_row.children[0].append(checkbox);
-  new_row.children[0].append(label);
+  const fullName = student.full_name || [student.last_name, student.first_name].filter(Boolean).join(" ");
   [
     student.group_name,
-    student.full_name,
+    fullName,
     student.gender,
-    formattedDate(student.birth_date),
-  ].forEach((text, i) => (new_row.children[i + 1].textContent = text));
-  new_row.children[5].append(img_stat);
-  new_row.children[6].append(container);
+    formattedDate(student.birthday),
+  ].forEach((text, i) => (row.children[i + 1].textContent = text));
 
-  if (!headCbxItem.checked) lockOptions(checkbox);
-  else onDelete();
+  if (checkbox) {
+    if (!headCbxItem.checked) lockOptions(checkbox);
+    else onDelete();
+  }
+}
+function openTableById(id) {
+  tableId = id;
+  localStorage.setItem('selectedTableId', id);
+  currentPage = getTablePageMap()[id] !== undefined ? parseInt(getTablePageMap()[id], 10) : 0;
+  loadTable();
 
-  tableBody.append(new_row);
 }
 
-// function editIconClick(event) {
-//   const clckElem = event.target;
-//   console.log("editIconClick");
-//   if (clckElem.id === "icon-edit-row") {
-//     const studentId = clckElem.dataset.studentId;
 
-//     event.stopPropagation();
+let freeRowsPool = []; 
+let studentRowPool = {}; 
 
-//     const studentIndex = students.findIndex(
-//       (student) => student.id == studentId
-//     );
+function fillRowsWithStudents(students) {
+  tableBody.innerHTML = "";
 
-//     if (studentIndex !== -1) {
-//       student = students[studentIndex];
+  const studentIds = new Set(students.map(s => String(s.id)));
 
-//       group_name_input.value = student.group_name;
-//       first_name_input.value = student.full_name.split(" ")[0];
-//       last_name_input.value = student.full_name.split(" ")[1];
-//       gender_input.value = student.gender;
-//       birth_date_input.value = student.birth_date;
+  Object.entries(studentRowPool).forEach(([id, row]) => {
+    if (!studentIds.has(id)) {
+      freeRowsPool.push(row);
+      if (row.parentNode) row.parentNode.removeChild(row);
+      delete studentRowPool[id];
+    }
+  });
 
-//       openWindow(false);
-//     }
-//   }
-// }
+  const pageSize = parseInt(paginationSize.value, 10) || 5;
+  const visibleStudents = students.slice(0, pageSize);
+
+  visibleStudents.forEach((student, idx) => {
+    let row = studentRowPool[student.id];
+    if (!row) {
+      row = freeRowsPool.shift() || createEmptyRow();
+      addRowToPool(row, student);
+      studentRowPool[student.id] = row;
+    }
+
+    if (tableBody.rows[idx] !== row) {
+      if (tableBody.rows.length > idx) {
+        tableBody.insertBefore(row, tableBody.rows[idx]);
+      } else {
+        tableBody.appendChild(row);
+      }
+    }
+  });
+}
+
+function removeStudentRow(studentId) {
+  const row = studentRowPool[studentId];
+  if (row) {
+
+    for (let i = 0; i < 7; i++) row.children[i].innerHTML = "";
+    row.removeAttribute("data-student-id");
+    row.onclick = null;
+
+    freeRowsPool.push(row);
+
+    if (row.parentNode) row.parentNode.removeChild(row);
+    delete studentRowPool[studentId];
+  }
+}
+
+const paginationStart = document.getElementById("pagination-start");
+const paginationEnd = document.getElementById("pagination-end");
+
+let totalStudents = 0; 
+let maxPage = 0;
+
+function markLastVisibleColumns() {
+  const ths = Array.from(document.querySelectorAll("thead th"));
+  ths.forEach(th => th.classList.remove("last-visible-col"));
+  const lastVisibleTh = ths.reverse().find(th => th.style.display !== "none");
+  if (lastVisibleTh) lastVisibleTh.classList.add("last-visible-col");
+
+  document.querySelectorAll("tbody tr").forEach(tr => {
+    const tds = Array.from(tr.children);
+    tds.forEach(td => td.classList.remove("last-visible-col"));
+    const lastVisibleTd = tds.reverse().find(td => td.style.display !== "none");
+    if (lastVisibleTd) lastVisibleTd.classList.add("last-visible-col");
+  });
+}
+
+
+async function loadTable() {
+  if (!tableId) return;
+  const pageSize = parseInt(paginationSize.value, 10) || 5;
+  const offset = currentPage * pageSize;
+
+  try {
+    const response = await fetch(`/website/public/api/table.php?action=getStudents&tableId=${encodeURIComponent(tableId)}&limit=${pageSize}&offset=${offset}`);
+    const result = await response.json();
+
+    totalStudents = result.total || 0; 
+    maxPage = Math.max(1, Math.ceil(totalStudents / pageSize));
+    if ((!result.students || result.students.length === 0) && currentPage > 0) {
+      currentPage = maxPage - 1;
+      saveCurrentPageForTable(tableId, currentPage);
+      return loadTable(); 
+    }
+
+    if (result.students && result.students.length > 0) {
+      fillRowsWithStudents(result.students);
+      updateTableColumnsVisibility(); 
+      markLastVisibleColumns();
+      updateTableHeaderVisibility();
+      lastLoadedCount = result.students.length;
+    } else {
+      fillRowsWithStudents([]);
+      updateTableHeaderVisibility();
+      lastLoadedCount = 0;
+    }
+
+    updatePagination();
+  } catch (err) {
+    console.error("Failed to load students:", err);
+    fillRowsWithStudents([]);
+    updateTableHeaderVisibility();
+    lastLoadedCount = 0;
+    updatePagination();
+  }
+}
+
+function updatePagination() {
+  if (paginationStart) {
+    const active = (currentPage >= 2);
+    paginationStart.style.opacity = (currentPage >= 2) ? "1" : "0.5";
+    paginationStart.style.pointerEvents = (currentPage >= 2) ? "auto" : "none";
+    paginationStart.querySelector("p").textContent = active ? "1" : "";
+  }
+  if (prevPageBtn) {
+    prevPageBtn.style.opacity = (currentPage >= 1) ? "1" : "0.5";
+    prevPageBtn.style.pointerEvents = (currentPage >= 1) ? "auto" : "none";
+    prevPageBtn.querySelector("p").textContent = (currentPage >= 1) ? (currentPage) : "";
+  }
+  if (paginationCurrent) {
+    paginationCurrent.querySelector("p").textContent = (currentPage + 1).toString();
+  }
+  if (nextPageBtn) {
+    nextPageBtn.style.opacity = (currentPage <= maxPage - 2) ? "1" : "0.5";
+    nextPageBtn.style.pointerEvents = (currentPage <= maxPage - 2) ? "auto" : "none";
+    nextPageBtn.querySelector("p").textContent = (currentPage <= maxPage - 2) ? (currentPage + 2) : "";
+  }
+  if (paginationEnd) {
+    const active = (currentPage <= maxPage - 3);
+    paginationEnd.style.opacity = active ? "1" : "0.5";
+    paginationEnd.style.pointerEvents = active ? "auto" : "none";
+    paginationEnd.querySelector("p").textContent = active ? maxPage.toString() : "";
+  }
+}
+
+if (paginationStart) {
+  paginationStart.addEventListener("click", () => {
+    if (currentPage >= 2) {
+      currentPage = 0;
+      saveCurrentPageForTable(tableId, currentPage);
+      loadTable();
+    }
+  });
+}
+if (prevPageBtn) {
+  prevPageBtn.addEventListener("click", () => {
+    if (currentPage > 0) {
+      currentPage--;
+      saveCurrentPageForTable(tableId, currentPage);
+      loadTable();
+    }
+  });
+}
+if (nextPageBtn) {
+  nextPageBtn.addEventListener("click", () => {
+    if (currentPage < maxPage - 1) {
+      currentPage++;
+      saveCurrentPageForTable(tableId, currentPage);
+      loadTable();
+    }
+  });
+}
+if (paginationEnd) {
+  paginationEnd.addEventListener("click", () => {
+    if (currentPage <= maxPage - 3) {
+      currentPage = maxPage - 1;
+      saveCurrentPageForTable(tableId, currentPage);
+      loadTable();
+    }
+  });
+}
+
+const paginationSize = document.getElementById("pagination-size");
+const savedPageSize = localStorage.getItem('paginationSize');
+paginationSize.value = savedPageSize ? savedPageSize : 5;
+
+const MIN_PAGE_SIZE = 1;
+const MAX_PAGE_SIZE = 100;
+
+function validatePaginationSize() {
+  let value = parseInt(paginationSize.value, 10);
+  if (isNaN(value) || value < MIN_PAGE_SIZE) value = MIN_PAGE_SIZE;
+  if (value > MAX_PAGE_SIZE) value = MAX_PAGE_SIZE;
+  paginationSize.value = value;
+  localStorage.setItem('paginationSize', value);
+  currentPage = 0;
+  saveCurrentPageForTable(tableId, currentPage);
+  loadTable();
+  updatePagination();
+}
+
+function canEditTable() {
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const table = tables.find(t => t.id == tableId);
+  console.log("user: ", user)
+  console.log("table: ", table)
+  console.log("user.role: ", user && user.role)
+  console.log("table.id_created_by: ", table && table.id_created_by)
+  return user && (user.role === 'teacher' && (table && table.id_created_by == user.id));
+}
+
+function updateTableHeaderVisibility() {
+  console.log("updateTableHeaderVisibility")
+  const editable = canEditTable();
+  console.log("editable: ", editable)
+  const thCheckbox = document.getElementById("th-checkbox");
+  const thOptions = document.getElementById("th-options");
+  if (thCheckbox) thCheckbox.style.display = editable ? "" : "none";
+  if (thOptions) thOptions.style.display = editable ? "" : "none";
+}
+
+
+function updateTableColumnsVisibility() {
+  console.log("updateTableColumnsVisibility")
+  const editable = canEditTable();
+  console.log("editable: ", editable)
+
+  document.querySelectorAll("th, td").forEach(cell => {
+    const idx = cell.cellIndex;
+    if (idx === 0 || idx === cell.parentElement.cells.length - 1) {
+      cell.style.display = editable ? "" : "none";
+    }
+  });
+}
+
+paginationSize.addEventListener("input", function(e) {
+  this.value = this.value.replace(/[^\d]/g, '');
+});
+
+paginationSize.addEventListener("change", validatePaginationSize);
+paginationSize.addEventListener("blur", validatePaginationSize);
+paginationSize.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    validatePaginationSize();
+    paginationSize.blur();
+  }
+});
 
 function formattedDate(date) {
   const dateValue = date;
@@ -932,101 +640,428 @@ function formattedDate(date) {
   return formattedDate;
 }
 
+async function refreshStudentRows() {
 
+  const pageSize = parseInt(paginationSize.value, 10) || 5;
+  const offset = currentPage * pageSize;
+  const response = await fetch(`/website/public/api/table.php?action=getStudentsStatusUpdated&tableId=${encodeURIComponent(tableId)}&limit=${pageSize}&offset=${offset}`);
+  const result = await response.json();
+  const backendStudents = result.students || [];
 
-async function editRow(student) {
-  console.log("editRow")
+  console.log("refreshStudentRows: ", backendStudents);
 
-  try {
+  const backendIds = new Set(backendStudents.map(s => String(s.id)));
+  const currentIds = new Set(Object.keys(studentRowPool));
 
-    console.log(student);
-    const response = await fetch('php/cng_student.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `id=${encodeURIComponent(student.id)}&first_name=${encodeURIComponent(student.first_name)}&last_name=${encodeURIComponent(student.last_name)}&gender=${encodeURIComponent(student.gender)}&birthday=${encodeURIComponent(student.birth_date)}&group=${encodeURIComponent(student.group_name)}&status=${encodeURIComponent(student.status)}`
-    });
-    const result = await response.json();
-
-    if (result.success) {
-
-      const btnArray = Array.from(document.querySelectorAll("#icon-delete-row"));
-
-      const rowIndex = btnArray.findIndex(
-        (btn) => btn.dataset.studentId == student.id
-      );
-
-      if (rowIndex !== -1) {
-        const row = btnArray[rowIndex].closest("tr");
-        [
-          student.group_name,
-          student.full_name,
-          student.gender,
-          formattedDate(student.birth_date),
-        ].forEach((text, i) => (row.children[i + 1].textContent = text));
+  for (const id of currentIds) {
+    if (!backendIds.has(id)) {
+      const row = studentRowPool[id];
+      if (row) {
+        freeRowsPool.push(row);
+        if (row.parentNode) row.parentNode.removeChild(row);
+        delete studentRowPool[id];
       }
-      console.log(JSON.stringify(student, null, 2));
-
-    } else {
-      console.error("Failed to update student:", result.error);
-      errorText.textContent = `Error: ${result.error}`;
     }
-  } catch (err) {
-    console.error("Fetch error:", err);
-    errorText.textContent = "Network error. Please try again.";
+  }
+
+  const missingIds = backendStudents
+    .map(s => String(s.id))
+    .filter(id => !studentRowPool[id]);
+  console.log("missingIds: ", missingIds);
+  let newStudentsData = [];
+  if (missingIds.length > 0) {
+    const resp = await fetch('/website/public/api/table.php?action=getStudentsByIds', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `ids=${encodeURIComponent(JSON.stringify(missingIds))}`
+    });
+    const data = await resp.json();
+    if (data.success && Array.isArray(data.students)) {
+      newStudentsData = data.students;
+    }
+  }
+
+  backendStudents.forEach(student => {
+    if (!studentRowPool[student.id]) {
+      const fullData = newStudentsData.find(s => String(s.id) === String(student.id));
+      if (fullData) {
+        let row = freeRowsPool.shift() || createEmptyRow();
+        addRowToPool(row, fullData);
+        studentRowPool[student.id] = row;
+        tableBody.appendChild(row);
+      }
+    } else if (
+      student.status_updated_at > last_updated_at
+    ) {
+      updateRowStatus(studentRowPool[student.id], student.status);
+    }
+  });
+}
+
+function updateRowStatus(row, status) {
+  let img_stat = row.children[5].querySelector("img.icon-status");
+  if (!img_stat) {
+    img_stat = createElem("img");
+    img_stat.className = "icon-status";
+    img_stat.alt = "status";
+    row.children[5].append(img_stat);
+  }
+  if (status === "1" || status === true) {
+    img_stat.src = "./img/icon/status_on.png";
+    img_stat.title = "Status: Active";
+  } else {
+    img_stat.src = "./img/icon/menu_opt.png";
+    img_stat.title = "Status: Inactive";
   }
 }
+let last_updated_at = new Date().toISOString();
+setInterval(() => {
+  if (tableId) {
+    refreshStudentRows();
+    last_updated_at = new Date().toISOString();
+  }
+}, 3000);
 
 const createTableModal = document.getElementById("wrapped-shadow-panel-create-table");
 const closeCreateTable = document.getElementById("icon-close-window-create-table");
-const cancelCreateTable = document.getElementById("button-cancel-create-table");
+const cancelCreateTable = document.getElementById("button-cancel-table");
 const dropDownCreateTableButton = getElement("#dropdown-table-item-create");
+const createBtn = document.getElementById("button-create-table");
+const saveBtn = document.getElementById("button-save-table");
+const confirmBtn = document.getElementById("button-confirm-table");
+const textConfirm = document.getElementById("text-confirm-table");
+const formCreateTable = document.getElementById("form-create-table");
 
-function openCreateTableModal() {
-  createTableModal.style.display = "flex";
-  document.body.style.overflow = "hidden";
+let isCreateMode = true;
 
+let studentsArray = [];
+let teachersArray = [];
+
+let studentsArraySelected = [];
+let teachersArraySelected = [];
+
+function updateConfirmState() {
+  if (isConfirmMode && !isFormChanged()) {
+    setCreateMode(isCreateMode);
+    isConfirmMode = false;
+  }
+}
+
+async function loadAllUsers() {
+  studentsArray = [];
+  let res = await fetch('/website/public/api/search.php?action=searchAllStudents&limit=10000');
+  let data = await res.json();
+  if (data && data.results) studentsArray = data.results;
+  console.log("studentsArray: ", studentsArray);
+
+  teachersArray = [];
+  res = await fetch('/website/public/api/search.php?action=searchAllTeachers&limit=10000');
+  data = await res.json();
+  if (data && data.results) teachersArray = data.results;
+  console.log("teachersArray: ", teachersArray);
+}
+
+let studentsArraySelectedSaved = [];
+let teachersArraySelectedSaved = [];
+
+async function openCreateTableModal(value, tableId = null) {
+  console.log("openCreateTableModal: ", value, tableId);
+  isCreateMode = value;
+
+  showTableNameError("");
+
+  if (isCreateMode) {
+    formCreateTable.reset();
+    studentsArraySelected.length = 0;
+    teachersArraySelected.length = 0;
+    studentsArraySelectedSaved.length = 0;
+    teachersArraySelectedSaved.length = 0;
+    window._initialTableName = "";
+  if (studentAutocomplete) studentAutocomplete.renderSelected();
+  if (teacherAutocomplete) teacherAutocomplete.renderSelected();
+    loadAllUsers();
+
+    setCreateMode(true);
+    createTableModal.style.display = "flex";
+    return;
+  }
+
+  formCreateTable.reset();
+  try {
+    const response = await fetch(`/website/public/api/table.php?action=getFullInfo&tableId=${encodeURIComponent(tableId)}`);
+    const result = await response.json();
+
+    if (result.success && result.data) {
+      const table = result.data;
+
+      formCreateTable.elements["table-name"].value = table.name || "";
+      if (formCreateTable.elements["table-description"])
+        formCreateTable.elements["table-description"].value = table.description || "";
+
+        window._initialTableName = table.name || "";
+
+      studentsArraySelected.length = 0;
+      teachersArraySelected.length = 0;
+      if (Array.isArray(table.students)) {
+        studentsArraySelected.push(...table.students);
+      }
+      if (Array.isArray(table.teachers)) {
+        teachersArraySelected.push(...table.teachers);
+      }
+
+      studentsArraySelectedSaved = studentsArraySelected.map(s => s.id);
+      teachersArraySelectedSaved = teachersArraySelected.map(t => t.id);
+
+  if (studentAutocomplete) studentAutocomplete.renderSelected();
+  if (teacherAutocomplete) teacherAutocomplete.renderSelected();
+
+      await loadAllUsers();
+      setCreateMode(false);
+      createTableModal.style.display = "flex";    
+    }
+  } catch (err) {
+    console.error("Failed to load table info:", err);
+  }
 }
 function closeCreateTableModal() {
   createTableModal.style.display = "none";
-  document.body.style.overflow = "";
+  setCreateMode(true);
+  isConfirmMode = false;
 }
 const dropdownTable = document.getElementById("dropdown-table-select");
 
+function isFormChanged() {
+  const nameChanged = formCreateTable.elements["table-name"].value !== (window._initialTableName || "");
+
+  console.log(studentsArraySelected, " ", studentsArraySelectedSaved);
+  console.log(teachersArraySelected, " ", teachersArraySelectedSaved);
+  const studentsChanged = JSON.stringify(studentsArraySelected.map(s => String(s.id)).sort()) !== JSON.stringify((studentsArraySelectedSaved || []).map(String).sort());
+  const teachersChanged = JSON.stringify(teachersArraySelected.map(t => String(t.id)).sort()) !== JSON.stringify((teachersArraySelectedSaved || []).map(String).sort());
+    
+  return nameChanged || studentsChanged || teachersChanged;
+} 
+
+const tableNameInput = document.getElementById("table-name");
+const tableNameError = document.getElementById("error-table-name");
+const tableNameErrorText = tableNameError.querySelector(".error-text-content");
+
+function showTableNameError(message) {
+  tableNameErrorText.textContent = message;
+  tableNameError.style.display = message ? "block" : "none";
+  tableNameInput.classList.toggle("input-error", !!message);
+}
+
+function validateTableName() {
+  const value = tableNameInput.value.trim();
+
+  if (!value) {
+    showTableNameError("Field cannot be empty.");
+    return false;
+  }
+  if (value.length < 3) {
+    showTableNameError("Name must be at least 3 characters.");
+    return false;
+  }
+  if (!/^[A-Za-z0-9_]+$/.test(value)) {
+    showTableNameError("Only letters, digits and _ are allowed.");
+    return false;
+  }
+  if (!/^[A-Z][a-z0-9_]*$/.test(value)) {
+    showTableNameError("First letter must be uppercase, others lowercase or digits/_");
+    return false;
+  }
+
+  showTableNameError("");
+  return true;
+}
+
+tableNameInput.addEventListener("input", validateTableName);
+tableNameInput.addEventListener("blur", validateTableName);
+
+let isConfirmMode = false;
+cancelCreateTable.onclick = function () {
+   console.log("Cancel clicked, isFormChanged:", isFormChanged(), "isConfirmMode:", isConfirmMode);
+  if (isConfirmMode) {
+    setCreateMode(isCreateMode);
+    isConfirmMode = false;
+    return;
+  }
+
+  console.log(saveBtn, " ", createBtn, " ", confirmBtn, " ", cancelCreateTable);
+  if (isFormChanged()) {
+    console.log("Changes detected, showing confirm dialog");
+
+    createBtn.style.display = "none";
+    saveBtn.style.display = "none";
+    confirmBtn.style.display = "block";
+    textConfirm.style.opacity = 5;
+    textConfirm.textContent = "All changes will be discarded.\nAre you sure you want to exit?";
+    isConfirmMode = true;
+  } else {
+    closeCreateTableModal();
+  }
+  console.log(saveBtn, " ", createBtn, " ", confirmBtn, " ", cancelCreateTable);
+
+};
+confirmBtn.onclick = function () {
+  closeCreateTableModal();
+
+  isConfirmMode = false;
+};
+
+textConfirm.onclick = function () {
+
+};
+
+confirmBtn.addEventListener("blur", function () {
+  setTimeout(() => {
+    if (createTableModal.style.display === "block" && isConfirmMode) {
+      setCreateMode(isCreateMode);
+      isConfirmMode = false;
+    }
+  }, 200);
+});
 
 dropDownCreateTableButton.addEventListener("click", function (e) {
   e.stopPropagation();
-  openCreateTableModal();
+  openCreateTableModal(true);
   dropdownTable.classList.remove("open");
 });
 
+createBtn.onclick = async function (e) {
+  e.preventDefault();
+  if (!validateTableName()) return;
+
+  const studentsToAdd = studentsArraySelected.map(s => s.id);
+  const teachersToAdd = teachersArraySelected.map(t => t.id);
+
+  const name = formCreateTable.elements["table-name"].value;
+
+  const description = "";
+  const response = await fetch('/website/public/api/table.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      action: 'createFullInfo',
+      name: name,
+      description: description,
+      studentsToAdd: JSON.stringify(studentsToAdd),
+      teachersToAdd: JSON.stringify(teachersToAdd)
+
+    })
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    closeCreateTableModal();
+    await loadUserTables(); 
+    if (result.tableId) { 
+      openTableById(result.tableId); 
+      const found = tables.find(t => t.id == result.tableId);
+      dropdownTableTitle.textContent = found ? found.label : "Select Table";
+    }
+  } else {
+    alert("Error creating table");
+  }
+};
+saveBtn.onclick = async function (e) {
+  e.preventDefault();
+  if (!validateTableName()) return;
+
+  const currentStudents = studentsArraySelected.map(s => s.id);
+  const currentTeachers = teachersArraySelected.map(t => t.id);
+
+  const studentsToAdd = currentStudents.filter(id => !studentsArraySelectedSaved.includes(id));
+  const studentsToRemove = studentsArraySelectedSaved.filter(id => !currentStudents.includes(id));
+  const teachersToAdd = currentTeachers.filter(id => !teachersArraySelectedSaved.includes(id));
+  const teachersToRemove = teachersArraySelectedSaved.filter(id => !currentTeachers.includes(id));
+
+  const name = formCreateTable.elements["table-name"].value;
+
+  const description = "";
+  
+  const response = await fetch('/website/public/api/table.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      action: 'updateFullInfo',
+      tableId: tableId,
+      name: name,
+      description: description,
+      studentsToAdd: JSON.stringify(studentsToAdd),
+      studentsToRemove: JSON.stringify(studentsToRemove),
+      teachersToAdd: JSON.stringify(teachersToAdd),
+      teachersToRemove: JSON.stringify(teachersToRemove)
+    })
+  });
+  
+  const result = await response.json();
+  if (result.success) {
+    closeCreateTableModal();
+  } else {
+    alert("Error updating table: " + (result.error || ""));
+  }
+};
+
+const createTitle = document.getElementById("create-table-title");
+const editTitle = document.getElementById("Edit-table-title");
+
+function setCreateMode(mode) {
+  console.log("setCreateMode: ", mode);
+  isCreateMode = mode;
+  createBtn.style.display = mode ? "block" : "none";
+  saveBtn.style.display = mode ? "none" : "block";
+  confirmBtn.style.display = "none";
+  textConfirm.style.opacity = 0;
+
+  if (createTitle && editTitle) {
+    createTitle.style.display = mode ? "block" : "none";
+    editTitle.style.display = mode ? "none" : "block";
+  }
+}
+
 closeCreateTable.addEventListener("click", closeCreateTableModal);
-// cancelCreateTable.addEventListener("click", closeCreateTableModal);
 
-const studentsArray = ["12345", "14445", "23456", "34567", "12561", "12313", "12346", "12367", "12348"];
-const teachersArray = ["54321", "65432", "76543"];
 
-setupAutocomplete(
+const studentAutocomplete = setupAutocomplete(
   "#student-input",
   "#dropdown-list-student",
-  studentsArray,
   "#selected-container-student",
-  "students"
+  "student",
+  "searchStudents",
+  () => studentsArray,
+  () => studentsArraySelected
 );
 
-setupAutocomplete(
+const user = JSON.parse(localStorage.getItem('user') || 'null');
+const teacherAutocomplete = setupAutocomplete(
   "#teacher-input",
   "#dropdown-list-teacher",
-  teachersArray,
   "#selected-container-teacher",
-  "teacher"
+  "teacher",
+  "searchTeachers",
+  () => teachersArray,
+  () => teachersArraySelected,
+  15,
+  user ? user.id : null
 );
-
 const dropdownTableList = document.getElementById("dropdown-table-list");
 const dropdownTableTitle = document.getElementById("dropdown-table-title");
 
-function createDropdownTableButton(name, id) {
+function getTablePageMap() {
+  return JSON.parse(localStorage.getItem('tablePage') || '{}');
+}
+function setTablePageMap(map) {
+  localStorage.setItem('tablePage', JSON.stringify(map));
+}
+
+function saveCurrentPageForTable(tableId, page) {
+  const map = getTablePageMap();
+  map[tableId] = page;
+  setTablePageMap(map);
+}
+
+function createDropdownTableButton(name, id, isCreator = false) {
   const li = document.createElement("li");
   li.className = "dropdown-table-item";
   li.setAttribute("data-table", name);
@@ -1035,58 +1070,129 @@ function createDropdownTableButton(name, id) {
     if (e.target.classList.contains("dropdown-icon")) return;
     dropdownTableTitle.textContent = name;
     dropdownTable.classList.remove("open");
+    openTableById(id);
   });
 
   const p = document.createElement("p");
   p.textContent = name;
   li.appendChild(p);
 
-  let img = undefined; 
-  img = document.createElement("img");
-  img.src = "./img/icon/edit_white.png";
-  img.className = "dropdown-icon";
-  img.alt = "edit";
-  img.title = "Edit";
-  li.appendChild(img);
+  if (isCreator) {
+    let imgEdit = document.createElement("img");
+    imgEdit.src = "./img/icon/edit_white.png";
+    imgEdit.className = "dropdown-icon";
+    imgEdit.alt = "edit";
+    imgEdit.title = "Edit";
+    li.appendChild(imgEdit);
 
-  img.addEventListener("click", (e) => {
-    e.stopPropagation();
-    // TODO: Відкрити вікно в режимі редагування
-    dropdownTable.classList.remove("open");
-  });
-  
-  img = document.createElement("img");
-  img.src = "./img/icon/delete_white.png";
-  img.className = "dropdown-icon";
-  img.alt = "delete";
-  img.title = "Delete";
-  li.appendChild(img);
+    imgEdit.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownTable.classList.remove("open");
+      tableId = id;
+      openCreateTableModal(false, id);
+    });
+  }
 
-  img.addEventListener("click", (e) => {
+
+  let imgDelete = document.createElement("img");
+  imgDelete.src = "./img/icon/delete_white.png";
+  imgDelete.className = "dropdown-icon";
+  imgDelete.alt = "delete";
+  imgDelete.title = "Delete";
+  li.appendChild(imgDelete);
+
+  imgDelete.addEventListener("click", (e) => {
     e.stopPropagation();
-    // TODO: Відкрити вікно уточнення видалення
     dropdownTable.classList.remove("open");
+    windowShadowPanelConfirm.style.display = "block";
+    textConfirmWindow.textContent = `Are you sure you want to delete table "${name}"?`;
+    if (isCreator) textConfirmWindow.textContent += "\nYou created this table, so deleting it will remove it for all users.";
+
+    confirmConfirmWindowButton.onclick = async function () {
+      try {
+        const response = await fetch('/website/public/api/table.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            action: 'deleteTable',
+            tableId: id
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+            const map = getTablePageMap();
+          delete map[id];
+          setTablePageMap(map);
+          loadUserTables();
+          closeConfirmWindow();
+        } else {
+          alert("Error deleting table");
+        }
+      } catch (err) {
+        alert("Network error");
+      }
+    };
   });
-  
+
   dropdownTableList.prepend(li);
 }
 
-const tables = [
-  { id: 1, label: "Students" },
-  { id: 2, label: "Teachers" },
-  { id: 3, label: "Groups" }
-];
+const tables = [];
+
+async function loadUserTables() {
+  console.log("loadUserTables")
+  try {
+    const res = await fetch('/website/public/api/table.php?action=getUserTables');
+    const data = await res.json();
+    if (data.success && Array.isArray(data.tables)) {
+      tables.length = 0;
+      data.tables.forEach(t => tables.push({ id: t.id, label: t.name, id_created_by: t.id_created_by }));
+      updateTableList();
+      console.log("tables: ", tables);
+
+      const savedTableId = localStorage.getItem('selectedTableId');
+      if (savedTableId) {
+        const found = tables.find(t => t.id == savedTableId);
+        if (!found) {
+          localStorage.removeItem('selectedTableId');
+          tableId = null;
+        } else {
+          tableId = savedTableId;
+        }
+      }
+
+    } else {
+      console.error("Failed to load tables:", data.error);
+    }
+  } catch (err) {
+    console.error("Network error loading tables:", err);
+  }
+}
+
+loadUserTables();
 
 function updateTableList() {
   dropdownTableList.innerHTML = "";
   dropdownTableList.appendChild(dropDownCreateTableButton);
 
   tables.forEach(btn => {
-    createDropdownTableButton(btn.label, btn.id);
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const isCreator = user && btn.id_created_by === user.id;
+    createDropdownTableButton(btn.label, btn.id, isCreator);
   });
-}
-updateTableList();
 
+  const dropdownTableTitle = document.getElementById("dropdown-table-title");
+  const savedTableId = localStorage.getItem('selectedTableId');
+  const found = tables.find(t => t.id == savedTableId);
+
+  if (found) {
+    dropdownTableTitle.textContent = found.label;
+  } else {
+    dropdownTableTitle.textContent = "Select table";
+    localStorage.removeItem('selectedTableId');
+    tableId = null;
+  }
+}
 
 function createDropdownTable() {
   const btn = getElement("#dropdown-table-btn");

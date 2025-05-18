@@ -125,7 +125,10 @@ function logout() {
     method: 'POST'
   })
   .then(response => {
-    // localStorage.removeItem('user');
+    localStorage.removeItem('user');
+    localStorage.removeItem('selectedTableId');
+    localStorage.removeItem('paginationSize');
+    localStorage.removeItem('tablePageMap');
     window.location.href = './auth.php';
   })
   .catch(() => {

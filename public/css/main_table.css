@@ -22,8 +22,10 @@
   margin-top: 5px;
   margin-bottom: 15px;
   width: 100%;
-  height: calc(100% - 125px);
-  overflow-x: hidden;
+  min-height: calc(100% - 87px);
+    /* max-height: none; */
+  /* height: calc(100% - 125px);
+  overflow-x: hidden; */
 }
 
 table {
@@ -110,8 +112,21 @@ th:last-child,
 td:last-child {
   border-right: none;
 }
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+
 tr:last-child td {
   border-bottom: none;
+  height: 37px;
+
+}
+
+th.last-visible-col,
+td.last-visible-col {
+  border-right: none !important;
 }
 
 th input[type="checkbox"],
@@ -217,13 +232,14 @@ td input[type="checkbox"]:checked::before {
 
 .pagination-panel {
   width: 100%;
-  height: 36px;
+  height: 45px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 24px;
   justify-content: center;
   position: relative;
+  padding-bottom: 15px;
 }
 
 #form-item-pagination {
@@ -387,6 +403,15 @@ legend {
   list-style: none;
 }
 
+.pagination-panel,
+.pagination-panel *,
+.pagination-panel-item,
+.pagination-panel-item * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 #dropdown-table-item-create {
   color: var(--white-normal);
   background-color: var(--darkblue);
@@ -401,6 +426,19 @@ legend {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px);}
   to { opacity: 1; transform: translateY(0);}
+}
+
+td:last-child {
+  position: relative;
+}
+
+.icon-delete-row {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 4px;
+  right: calc(50% - 16px);
+  cursor: pointer;
 }
 
 .dropdown-table-item {
@@ -430,6 +468,10 @@ legend {
   color: var(--white-accent);
 }
 
+th[style*="display: none"], td[style*="display: none"] {
+  display: none !important;
+} 
+
 .dropdown-icon {
   width: 28px;
   height: 28px;
@@ -446,6 +488,9 @@ legend {
 #dropdown-table-item-create:hover .dropdown-icon {
   opacity: 1;
 }
+
+
+
 
 @media screen and (max-width: 1100px) {
   .dropdown-table-select {
@@ -568,9 +613,7 @@ legend {
   .dropdown-table-btn {
      margin-left: 52px;
   }
-  .dropdown-table-btn h2 {
 
-  }
   .table-panel {
     position: relative;
     height: 104px;
@@ -587,7 +630,8 @@ legend {
   .wrapper-table {
     position: relative;
     top: -10px;
-    height: calc(100% - 177px);
+    /* min-height: calc(100% - 177px); */
+    /* max-height: none; */
   }
   .dropdown-table-btn {
     left: -42px;
