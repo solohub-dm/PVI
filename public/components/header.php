@@ -14,7 +14,7 @@
         <div class="notification-panel" id="notification-panel">
           <img src="./img/icon/notification_off_rev2.png" alt="notification icon" id="icon-notification"/>
           <div id="wrapper-message-menu">
-            <div class="message-menu-item"> 
+            <!-- <div class="message-menu-item"> 
               <div class="message-avatar-panel">
                 <img src="./img/icon/avatar_rev_white.png" alt="avatar" class="icon-message-avatar" />
               </div>
@@ -43,7 +43,7 @@
                 <p class="message-username">username</p>
                 <p class="message-text">This is message sent to this user.</p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div id="profile-panel">
@@ -56,5 +56,6 @@
         </div>
     </div>
   </header> 
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </body>
 </html>

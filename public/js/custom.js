@@ -11,21 +11,42 @@ function noMatchInput(dropdownTable) {
     dropdownTable.style.display = "block";
   }
   
-  
-function setupAutocomplete(inputId, dropdownId, selectedId, name, searchType, getArray, getArraySelected, limit = 15, excludeId = null) {
+  async function loadAllUsers() {
+  let arrays = {
+    students: [],
+    teachers: []
+  };
+  let res = await fetch('/website/public/api/search.php?action=searchAllStudents&limit=10000');
+  let data = await res.json();
+  if (data && data.results) arrays.students = data.results;
+  console.log("studentsArray: ", arrays.students);
 
-    const input = getElement(inputId);
+  res = await fetch('/website/public/api/search.php?action=searchAllTeachers&limit=10000');
+  data = await res.json();
+  if (data && data.results) arrays.teachers = data.results;
+  console.log("teachersArray: ", arrays.teachers);
+
+  return arrays;
+}
+  
+function setupAutocomplete(inputId, dropdownId, selectedId, name, searchType, getArray, getArraySelected, limit = 100, excludeId = null) {
+    console.log("Setting up autocomplete for:", getArray());
+    const input = document.querySelector(inputId);
     if (!input) return;
-    const dropdownTable = getElement(dropdownId);
-    const selectedContainer = getElement(selectedId);
+    const dropdownTable = document.querySelector(dropdownId);
+    const selectedContainer = document.querySelector(selectedId);
 
     function getSelectedItems() {
       return getArraySelected ? getArraySelected() : [];
     }
 
   async function fetchMatches(query) {
+    console.log("Fetching matches for query:", query);
     if (!query) return [];
     const array = typeof getArray === "function" ? getArray() : [];
+    console.log("Type of getArray:", typeof getArray);
+    console.log("getArray:", getArray());
+    console.log("Array for search:", array);
     const q = query.toLowerCase();
     return array.filter(
       u =>

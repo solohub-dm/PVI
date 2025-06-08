@@ -66,23 +66,23 @@
 
 
 
-#wrapped-window-panel-create-table label {
+.wrapped-window-panel.create-window label {
   min-width: 110px;
   width: 110px;
 }
 
-#wrapped-window-panel-create-table input {
+.wrapped-window-panel.create-window input {
   
   width: 100%;
 }
 
-#wrapped-window-panel-create-table {
+.wrapped-window-panel.create-window {
   justify-content: center;
   max-width: 480px;
   width: 80%;
 } 
 
-#wrapped-window-panel-create-table .form-item {
+.wrapped-window-panel.create-window .form-item {
   max-width: 480px;
   padding: 0 6%;  
 } 
@@ -274,20 +274,19 @@ fieldset {
   border: none;
 }
 
-#fieldset-create-table {
+.wrapped-window-panel.create-window fieldset {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-
-#window-body-create-table {
+.wrapped-window-panel.create-window .window-body {
   margin-bottom: 12px;
   padding-left: 40px;
   padding-right: 40px;
 }
 
-#window-body-create-table .form-item{
+.wrapped-window-panel.create-window .window-body .form-item{
   padding-left: 0px;
   padding-right: 0px;
 }
@@ -297,7 +296,7 @@ fieldset {
     padding: 0px 25px;
   }
 
-  #window-body-create-table {
+  .wrapped-window-panel.create-window .window-body {
   padding-left: 35px;
   padding-right: 35px;
   }
@@ -323,7 +322,7 @@ fieldset {
 }
 
 @media screen and (max-width: 550px) {
-  #wrapped-window-panel-create-table .form-item {
+  .wrapped-window-panel.create-window .form-item {
     padding: 0;  
   } 
   
@@ -335,14 +334,14 @@ fieldset {
     max-width: calc(100% - 36px);
     width: calc(100% - 36px);
   }
-  #wrapped-window-panel-create-table {
+  .wrapped-window-panel.create-window {
     /* min-width: 100%;
     max-width: 100%; */
     width: 100%;  
     height: 100%;
     top: 50%;
   } 
-  #wrapped-window-panel-create-table .form-item {
+  .wrapped-window-panel.create-window .form-item {
     padding: 0 25px;  
   } 
   .form-item {

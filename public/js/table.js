@@ -648,7 +648,7 @@ async function refreshStudentRows() {
   const result = await response.json();
   const backendStudents = result.students || [];
 
-  console.log("refreshStudentRows: ", backendStudents);
+  // console.log("refreshStudentRows: ", backendStudents);
 
   const backendIds = new Set(backendStudents.map(s => String(s.id)));
   const currentIds = new Set(Object.keys(studentRowPool));
@@ -667,7 +667,7 @@ async function refreshStudentRows() {
   const missingIds = backendStudents
     .map(s => String(s.id))
     .filter(id => !studentRowPool[id]);
-  console.log("missingIds: ", missingIds);
+  // console.log("missingIds: ", missingIds);
   let newStudentsData = [];
   if (missingIds.length > 0) {
     const resp = await fetch('/website/public/api/table.php?action=getStudentsByIds', {
@@ -747,20 +747,6 @@ function updateConfirmState() {
   }
 }
 
-async function loadAllUsers() {
-  studentsArray = [];
-  let res = await fetch('/website/public/api/search.php?action=searchAllStudents&limit=10000');
-  let data = await res.json();
-  if (data && data.results) studentsArray = data.results;
-  console.log("studentsArray: ", studentsArray);
-
-  teachersArray = [];
-  res = await fetch('/website/public/api/search.php?action=searchAllTeachers&limit=10000');
-  data = await res.json();
-  if (data && data.results) teachersArray = data.results;
-  console.log("teachersArray: ", teachersArray);
-}
-
 let studentsArraySelectedSaved = [];
 let teachersArraySelectedSaved = [];
 
@@ -779,7 +765,11 @@ async function openCreateTableModal(value, tableId = null) {
     window._initialTableName = "";
   if (studentAutocomplete) studentAutocomplete.renderSelected();
   if (teacherAutocomplete) teacherAutocomplete.renderSelected();
-    loadAllUsers();
+    let arrays;
+    arrays = await loadAllUsers();
+    console.log("openCreateTableModal 1 arrays: ", arrays);
+    studentsArray = arrays.students || [];
+    teachersArray = arrays.teachers || [];
 
     setCreateMode(true);
     createTableModal.style.display = "flex";
@@ -812,10 +802,13 @@ async function openCreateTableModal(value, tableId = null) {
       studentsArraySelectedSaved = studentsArraySelected.map(s => s.id);
       teachersArraySelectedSaved = teachersArraySelected.map(t => t.id);
 
-  if (studentAutocomplete) studentAutocomplete.renderSelected();
-  if (teacherAutocomplete) teacherAutocomplete.renderSelected();
-
-      await loadAllUsers();
+      if (studentAutocomplete) studentAutocomplete.renderSelected();
+      if (teacherAutocomplete) teacherAutocomplete.renderSelected();
+      let arrays;
+      arrays = await loadAllUsers();
+      console.log("openCreateTableModal 2 arrays: ", arrays);
+      studentsArray = arrays.students || [];
+      teachersArray = arrays.teachers || [];
       setCreateMode(false);
       createTableModal.style.display = "flex";    
     }
@@ -922,9 +915,9 @@ confirmBtn.addEventListener("blur", function () {
   }, 200);
 });
 
-dropDownCreateTableButton.addEventListener("click", function (e) {
+dropDownCreateTableButton.addEventListener("click", async function (e) {
   e.stopPropagation();
-  openCreateTableModal(true);
+  await openCreateTableModal(true);
   dropdownTable.classList.remove("open");
 });
 
@@ -1023,28 +1016,43 @@ function setCreateMode(mode) {
 closeCreateTable.addEventListener("click", closeCreateTableModal);
 
 
-const studentAutocomplete = setupAutocomplete(
-  "#student-input",
-  "#dropdown-list-student",
-  "#selected-container-student",
-  "student",
-  "searchStudents",
-  () => studentsArray,
-  () => studentsArraySelected
-);
+let studentAutocomplete;
+let teacherAutocomplete;
+let user; 
 
-const user = JSON.parse(localStorage.getItem('user') || 'null');
-const teacherAutocomplete = setupAutocomplete(
-  "#teacher-input",
-  "#dropdown-list-teacher",
-  "#selected-container-teacher",
-  "teacher",
-  "searchTeachers",
-  () => teachersArray,
-  () => teachersArraySelected,
-  15,
-  user ? user.id : null
-);
+async function init() {
+  console.log("init");
+  let arrays = await loadAllUsers();
+  console.log("loadAllUsers: ", arrays);
+  studentsArray = arrays.students || [];
+  teachersArray = arrays.teachers || [];
+
+    studentAutocomplete = setupAutocomplete(
+    "#student-input",
+    "#dropdown-list-student",
+    "#selected-container-student",
+    "student",
+    "searchStudents",
+    () => studentsArray,
+    () => studentsArraySelected
+  );
+
+  user = JSON.parse(localStorage.getItem('user') || 'null');
+  teacherAutocomplete = setupAutocomplete(
+    "#teacher-input",
+    "#dropdown-list-teacher",
+    "#selected-container-teacher",
+    "teacher",
+    "searchTeachers",
+    () => teachersArray,
+    () => teachersArraySelected,
+    15,
+    user ? user.id : null
+  );
+}
+init();
+
+
 const dropdownTableList = document.getElementById("dropdown-table-list");
 const dropdownTableTitle = document.getElementById("dropdown-table-title");
 

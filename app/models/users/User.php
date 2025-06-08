@@ -106,7 +106,7 @@ abstract class User extends Model
   }
 
   public static function findViewAll() {
-    $fields = 'id, email, first_name, last_name, url_avatar';
+    $fields = 'id, email, first_name, last_name, url_avatar, status';
     return static::findManyBy($fields, 1, []);
   }
 

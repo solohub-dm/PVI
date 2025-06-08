@@ -360,9 +360,9 @@ document.addEventListener('click', function (e) {
     isFormChanged()
   ) {
     e.preventDefault();
-    if (confirm('You have unsaved changes. Are you sure you want to leave? All changes will be discarded.')) {
+    // if (confirm('You have unsaved changes. Are you sure you want to leave? All changes will be discarded.')) {
       window.onbeforeunload = null;
       window.location.href = target.href;
-    }
+    // }
   }
 });

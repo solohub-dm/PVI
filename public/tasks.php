@@ -2,7 +2,6 @@
 require_once __DIR__ . './api/auth_check.php';
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +19,7 @@ require_once __DIR__ . './api/auth_check.php';
       </main>
     </div>
     <footer></footer>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
     <script src="./js/components.js"></script>
   </body>

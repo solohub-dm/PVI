@@ -1,0 +1,406 @@
+/* public/css/messages.css */
+
+.main-message {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 100px 32px 32px;
+  gap: 32px;
+}
+
+.chat-sidebar {
+  background-color: var(--white-normal); /* Або var(--aside-normal) якщо більше підходить */
+  border: 4px solid var(--darkblue);
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px; /* Або інша ширина за макетом */
+  display: flex;
+  flex-direction: column;
+  /* box-shadow: 2px 4px 8px var(--shadow-lite); */
+  height: 100%;
+  overflow-y: auto;
+}
+
+.chat-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--darkblue);
+}
+
+.chat-sidebar-header h3 {
+  font-family: var(--font-decorative);
+  color: var(--darkblue);
+  font-size: 20px; /* Адаптуйте */
+  margin: 0;
+}
+
+.new-chat-btn {
+  font-family: var(--font-informative);
+  color: var(--darkblue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px; /* Адаптуйте */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-top: 2px;
+}
+.new-chat-btn:hover {
+  text-decoration: underline;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  background-color: var(--white-accent); /* Або інший світлий колір */
+  border: 2px solid var(--aside-normal); /* Або var(--darkblue) */
+  transition: background-color 0.2s;
+}
+
+.chat-list-item:hover {
+  background-color: var(--aside-normal); /* Колір при наведенні */
+  color: var(--white-normal);
+}
+.chat-list-item.active {
+  background-color: var(--darkblue); /* Активний чат */
+  color: var(--white-normal);
+  font-weight: bold;
+}
+.chat-list-item.active:hover {
+    background-color: var(--header-accent); /* Активний чат при наведенні */
+}
+
+
+.chat-list-item img.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid var(--darkblue);
+}
+.chat-list-item.active img.avatar {
+    border: 2px solid var(--white-normal);
+}
+
+.chat-list-item span {
+  font-family: var(--font-informative);
+  font-size: 16px; /* Адаптуйте */
+}
+
+
+.chat-main-area {
+  background-color: var(--white-normal);
+  border: 4px solid var(--darkblue);
+  border-radius: 8px;
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  /* box-shadow: 2px 4px 8px var(--shadow-lite); */
+  height: 100%;
+}
+
+.chat-header {
+  margin-bottom: 6px;
+  border-bottom: 2px solid var(--darkblue);
+}
+
+.chat-header h3 {
+  font-family: var(--font-decorative);
+  color: var(--darkblue);
+  font-size: 20px; /* Адаптуйте */
+  margin: 0 0 8px 0;
+}
+
+#chat-member-avatars,
+.chat-members {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.chat-members {
+    margin-bottom: 10px;
+
+}
+.chat-members span {
+    font-family: var(--font-informative);
+    color: var(--darkblue);
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.chat-members img.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--darkblue);
+}
+.add-member-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid var(--darkblue);
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.add-member-btn img {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+}
+
+.add-member-btn:hover {
+  background-color: var(--white-accent);
+}
+
+.messages-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-item {
+  display: flex;
+  align-items: flex-end; /* Аватари внизу повідомлення */
+  max-width: 70%; /* Щоб повідомлення не займало всю ширину */
+}
+
+.message-item.sent {
+  align-self: flex-end; /* Повідомлення поточного користувача праворуч */
+  flex-direction: row-reverse; /* Аватар праворуч від тексту */
+}
+.message-item.received {
+  align-self: flex-start; /* Повідомлення співрозмовника ліворуч */
+}
+
+.message-item img.avatar {
+
+  min-width: 34px;
+  min-height: 34px;
+  max-height: 34px;
+  max-height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--darkblue);
+  margin: 0 8px;
+}
+
+.message-content {
+  background-color: var(--white-accent); /* Колір фону повідомлення */
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-family: var(--font-informative);
+  font-size: 14px;
+  color: var(--darkblue);
+  border: 2px solid var(--aside-normal);
+  position: relative; /* Для хвостика */
+}
+.message-item.sent .message-content {
+  background-color: var(--aside-normal); /* Колір фону для вихідних */
+  color: var(--white-normal);
+  border: 2px solid var(--darkblue);
+}
+
+/* Хвостики для повідомлень (опціонально) */
+/* .message-content::before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.message-item.received .message-content::before {
+  left: -8px;
+  border-width: 0 10px 10px 0;
+  border-color: transparent var(--white-accent) transparent transparent;
+}
+.message-item.sent .message-content::before {
+  right: -8px;
+  border-width: 0 0 10px 10px;
+  border-color: transparent transparent transparent var(--aside-normal);
+} */
+
+
+.message-sender-name {
+    font-size: 11px;
+    color: var(--darkblue); /* Або інший колір для імені */
+    margin-bottom: 3px;
+    opacity: 0.7;
+}
+.message-item.sent .message-sender-name {
+    text-align: right; /* Ім'я праворуч для своїх повідомлень */
+}
+
+
+.message-input-area {
+  display: flex;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid var(--darkblue);
+}
+
+.message-input-area textarea {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid var(--darkblue);
+  border-radius: 6px;
+  resize: none; /* Заборонити зміну розміру */
+  font-family: var(--font-informative);
+  font-size: 14px;
+  margin-right: 10px;
+  min-height: 40px; /* Мінімальна висота */
+  max-height: 100px; /* Максимальна висота, якщо потрібне автозбільшення */
+}
+.message-input-area textarea:focus {
+    outline: none;
+    border-width: 3px;
+}
+
+.send-message-btn {
+  background-color: var(--darkblue);
+  color: var(--white-normal);
+  border: none;
+  border-radius: 6px;
+  padding: 0 15px;
+  cursor: pointer;
+  font-family: var(--font-decorative);
+  font-size: 16px; /* Адаптуйте */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  position: relative;
+  width: 52px;
+}
+.send-message-btn:hover {
+  background-color: var(--header-accent);
+}
+.send-message-btn img {
+  position: absolute;
+    width: 32px; /* Розмір іконки відправки */
+    height: 32px;
+    left: 9px;
+}
+
+#create-chat-title, #edit-chat-title {
+    display: none; 
+}
+
+.chat-list-item,
+.chat-members .avatar-wrapper { /* Додамо обгортку для аватара в списку учасників */
+  position: relative; /* Потрібно для абсолютного позиціонування індикатора */
+}
+
+/* Стиль для обгортки аватара в списку учасників, щоб можна було позиціонувати статус */
+.chat-members .avatar-wrapper {
+  display: inline-block; /* Або flex, якщо потрібно */
+  margin-right: 6px; /* Відстань між аватарами, якщо була в .chat-members img.avatar */
+}
+
+
+.online-status-indicator {
+  position: absolute;
+  bottom: 0px; /* Зміщення від нижнього краю аватара */
+  right: 0px;  /* Зміщення від правого краю аватара */
+  width: 10px; /* Розмір індикатора */
+  height: 10px;
+  background-color: var(--darkblue); /* Колір фону, поки іконка не завантажилася */
+  border: 2px solid var(--white-normal); /* Обводка, щоб було видно на темних аватарах */
+  border-radius: 50%;
+  /* z-index: 1; Якщо потрібно, щоб був поверх аватара */
+}
+
+/* Якщо використовуєте img для індикатора */
+.online-status-indicator img {
+    width: 100%;
+    height: 100%;
+    display: block; /* Забирає зайвий відступ під зображенням */
+}
+
+
+/* Специфічні налаштування для списку чатів */
+.chat-list-item .avatar-wrapper-chatlist { /* Нова обгортка для аватара у списку чатів */
+    position: relative;
+    display: inline-block; /* Або flex */
+    margin-right: 10px;
+}
+.chat-list-item .avatar-wrapper-chatlist .avatar {
+    display: block; /* Забирає зайвий відступ під зображенням */
+    width: 32px; /* Повторюємо розміри з .chat-list-item img.avatar */
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--darkblue);
+}
+.chat-list-item.active .avatar-wrapper-chatlist .avatar {
+    border: 2px solid var(--white-normal);
+}
+.chat-list-item .avatar-wrapper-chatlist .online-status-indicator {
+  right: -1px;  /* Трохи коригуємо для меншого аватара */
+  bottom: -1px;
+  width: 9px;
+  height: 9px;
+}
+
+
+/* Специфічні налаштування для списку учасників в хедері чату */
+.chat-members .avatar-wrapper .avatar {
+    display: block;
+    width: 28px; /* Повторюємо розміри з .chat-members img.avatar */
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--darkblue);
+}
+.chat-members .avatar-wrapper .online-status-indicator {
+  right: -1px;
+  bottom: -1px;
+  width: 8px;
+  height: 8px;
+}
+
+
+.chat-list-item {
+  position: relative; /* Для позиціонування лічильника */
+  /* ... ваші існуючі стилі ... */
+}
+
+.unread-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: var(--error-accent); /* Або інший колір для сповіщень */
+  color: var(--white-normal);
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 10px;
+  min-width: 18px; /* Щоб кружечок виглядав добре з однією цифрою */
+  text-align: center;
+  line-height: 1;
+}

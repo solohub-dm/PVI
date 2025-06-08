@@ -130,5 +130,6 @@ require_once __DIR__ . './api/auth_check.php';
   <script src="./js/components.js"></script>
   <script src="./js/valid.js"></script>
   <script src="./js/profile.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </body>
 </html>

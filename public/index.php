@@ -62,7 +62,7 @@ require_once __DIR__ . '/api/auth_check.php';
           </div>
 
           <div class="wrapped-shadow-panel" id="wrapped-shadow-panel-create-table" style="display: none;">
-            <div class="wrapped-window-panel" id="wrapped-window-panel-create-table">
+            <div class="wrapped-window-panel create-window" id="wrapped-window-panel-create-table">
               <div class="window-panel" id="window-panel-create-table">
                 <h3 class="text-window-title" id="create-table-title">Create table</h3>
                 <h3 class="text-window-title" id="Edit-table-title">Edit table</h3>
@@ -369,5 +369,10 @@ require_once __DIR__ . '/api/auth_check.php';
           );
       }
     </script> -->
+
+
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
   </body>
 </html>
